@@ -1,0 +1,26 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl: 
+    manifests: 
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: fatihsevban/ticketing-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        infer: 
+          - '**/*'
+          
+    - image: fatihsevban/ticketing-frontend
+      context: frontend
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        infer: 
+          - '**/*'
+        

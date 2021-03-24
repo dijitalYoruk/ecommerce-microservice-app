@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-auth-depl
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-auth
+  template:
+    metadata:
+      labels:
+        app: ticketing-auth
+    spec:
+      containers:
+      - name: ticketing-auth
+        image: fatihsevban/ticketing-auth
+        env:
+          - name: JWT_SECRET
+            value: "naber_la_gevsek"
+          - name: JWT_EXPIRES_IN
+            value: "90d"
+          - name: SERVER_PORT
+            value: "3000" 
+          - name: MONGO_HOST
+            value: "mongodb://ticketing-mongo-auth-srv:27017/auth"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  ticketing-auth-srv
+spec:
+  selector:
+    app: ticketing-auth
+  type:  ClusterIP
+  ports:
+    - name:  ticketing-auth
+      port:  3000
+      targetPort:  3000
