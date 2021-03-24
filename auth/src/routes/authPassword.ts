@@ -23,10 +23,11 @@ import {
 } from '../validations/auth';
 
 // routes
-routerAuth.post('/resetPassword', validateResetPassword, resetPassword);
-routerAuth.post('/forgotPassword', validateForgotPassword, forgotPassword);
-routerAuth.get('/verify', validateVerification, verifyUser);
-routerAuth.post('/resendVerification', validateResendVerification, resendVerificationEmail);
 routerAuth.post('/signUp', validateSignUpJWT, signUp);
 routerAuth.post('/signIn', validateSignInJWT, signIn);
+routerAuth.post('/verify', validateVerification, verifyUser);
+routerAuth.post('/resetPassword', validateResetPassword, resetPassword);
+routerAuth.post('/forgotPassword', validateForgotPassword, forgotPassword);
+routerAuth.post('/resendVerification', validateResendVerification, resendVerificationEmail);
+
 export default routerAuth;

@@ -58,7 +58,7 @@ const validateSignInGithub = [
 ]
 
 const validateVerification = [
-   query('token')
+   body('token')
       .notEmpty()
       .withMessage(__('validation_request', __('token'))),
    extractValidationErrors   

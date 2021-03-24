@@ -75,7 +75,7 @@ let signIn = async (req: Request, res: Response) => {
 };
 
 const verifyUser = async (req: Request, res: Response) => {
-   const verificationToken = req.query.token as string;
+   const verificationToken = req.body.token;
    const user = await User.findOne({ verificationToken });
 
    if (!user) {

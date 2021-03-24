@@ -1,61 +1,70 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
-  </v-app>
+   <v-app>
+      <Toolbar></Toolbar>
+      <v-main>
+         <transition name="slide" type="transition" mode="out-in">
+            <router-view></router-view>
+         </transition>
+      </v-main>
+   </v-app>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
-
-export default Vue.extend({
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
-});
+<script>
+import Toolbar from '@/components/shared/Toolbar';
+export default {
+   name: 'App',
+   components: { Toolbar },
+};
 </script>
+
+<style>
+html {
+   overflow-y: auto;
+}
+
+a div /deep/ .v-list {
+   text-decoration: none;
+}
+
+.nobr {
+   white-space: nowrap;
+}
+
+.slide-enter {
+   opacity: 0;
+}
+
+.slide-enter-active {
+   animation: slide-in 0.2s ease-out forwards;
+   transition: opacity 0.2s;
+   opacity: 1;
+}
+
+.slide-leave {
+   opacity: 1;
+}
+
+.slide-leave-active {
+   animation: slide-out 0.2s ease-out forwards;
+   transition: opacity 0.2s;
+   opacity: 0;
+}
+
+@keyframes slide-in {
+   from {
+      transform: translateX(20px);
+   }
+   to {
+      transform: translateX(0px);
+   }
+}
+
+@keyframes slide-out {
+   from {
+      transform: translateX(0px);
+   }
+   to {
+      transform: translateX(20px);
+   }
+}
+</style>
