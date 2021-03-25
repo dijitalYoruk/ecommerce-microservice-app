@@ -10,5 +10,5 @@ import { validateSignInFacebook } from '../validations/auth'
 
 // routes
 routerAuthFacebook.get('/authURL', retrieveFacebookURL)
-routerAuthFacebook.get('/signIn', validateSignInFacebook, signInFacebook)
+routerAuthFacebook.post('/signIn', validateSignInFacebook, signInFacebook)
 export default routerAuthFacebook

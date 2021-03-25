@@ -10,5 +10,5 @@ import { validateSignInGoogle } from '../validations/auth'
 
 // routes
 routerAuthGoogle.get('/authURL', retrieveGoogleURL)
-routerAuthGoogle.get('/signIn', validateSignInGoogle, signInGoogle)
+routerAuthGoogle.post('/signIn', validateSignInGoogle, signInGoogle)
 export default routerAuthGoogle

@@ -19,7 +19,7 @@ let retrieveGithubURL = async (req: Request, res: Response) => {
 }
 
 let signInGithub = async (req: Request, res: Response) => {
-   const code = req.query.code as string
+   const code = req.body.code
    const accessToken = await GithubAuth.getAccessToken(code)
    const dataGithub = await GithubAuth.getUserData(accessToken)
    let user = await User.findOne({ email: dataGithub.email })

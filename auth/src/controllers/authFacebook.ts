@@ -19,7 +19,7 @@ let retrieveFacebookURL = async (req: Request, res: Response) => {
 }
 
 let signInFacebook = async (req: Request, res: Response) => {
-   const code = req.query.code as string
+   const code = req.body.code 
    const accessToken = await FacebookAuth.getAccessToken(code)
    const dataFacebook = await FacebookAuth.getFacebookUserData(accessToken)
    let user = await User.findOne({ email: dataFacebook.email })

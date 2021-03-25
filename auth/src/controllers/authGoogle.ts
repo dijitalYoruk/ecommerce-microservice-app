@@ -19,7 +19,7 @@ let retrieveGoogleURL = async (req: Request, res: Response) => {
 };
 
 let signInGoogle = async (req: Request, res: Response) => {
-   const code = req.query.code as string;
+   const code = req.body.code
    const dataGoogle = await GoogleAuth.getGoogleUser(code);
    let user = await User.findOne({ email: dataGoogle.email });
 

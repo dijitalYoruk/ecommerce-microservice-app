@@ -10,5 +10,5 @@ import { validateSignInGithub } from '../validations/auth'
 
 // routes
 routerAuthGithub.get('/authURL', retrieveGithubURL)
-routerAuthGithub.get('/signIn', validateSignInGithub, signInGithub)
+routerAuthGithub.post('/signIn', validateSignInGithub, signInGithub)
 export default routerAuthGithub

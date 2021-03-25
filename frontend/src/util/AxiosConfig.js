@@ -22,6 +22,12 @@ export const URL = {
     VERIFY: 'auth/verify',
     SIGN_IN: 'auth/signIn',
     SIGN_UP: 'auth/signUp',
+    SIGN_IN_GOOGLE: 'auth/google/signIn',
+    SIGN_IN_GITHUB: 'auth/github/signIn',
+    SIGN_IN_FACEBOOK: 'auth/facebook/signIn',
+    GOOGLE_AUTH_URL: 'auth/google/authURL',
+    GITHUB_AUTH_URL: 'auth/github/authURL',
+    FACEBOOK_AUTH_URL: 'auth/facebook/authURL',
     RESET_PASSWORD: 'auth/resetPassword',
     FORGOT_PASSWORD: 'auth/forgotPassword',
 }

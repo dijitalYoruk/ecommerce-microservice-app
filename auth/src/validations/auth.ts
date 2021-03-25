@@ -1,5 +1,5 @@
 import { __ } from 'i18n';
-import { body, query } from 'express-validator';
+import { body } from 'express-validator';
 import { extractValidationErrors } from '../util/util'
 
 const validateSignUpJWT = [
@@ -37,21 +37,21 @@ const validateSignInJWT = [
 ]
 
 const validateSignInGoogle = [
-   query('code')
+   body('code')
       .notEmpty()
       .withMessage(__('validation_request', __('authentication_code'))),
    extractValidationErrors   
 ]
 
 const validateSignInFacebook = [
-   query('code')
+   body('code')
       .notEmpty()
       .withMessage(__('validation_request', __('authentication_code'))),
    extractValidationErrors   
 ]
 
 const validateSignInGithub = [
-   query('code')
+   body('code')
       .notEmpty()
       .withMessage(__('validation_request', __('authentication_code'))),
    extractValidationErrors   

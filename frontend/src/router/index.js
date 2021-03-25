@@ -6,6 +6,9 @@ Vue.use(VueRouter);
 // auth
 import Home from '@/components/home/index.vue';
 import Auth from '@/components/auth/Auth.vue';
+import AuthGoogle from '@/components/auth/AuthGoogle.vue';
+import AuthGithub from '@/components/auth/AuthGithub.vue';
+import AuthFacebook from '@/components/auth/AuthFacebook.vue';
 import AuthSignInForm from '@/components/auth/AuthSignInForm.vue';
 import AuthSignUpForm from '@/components/auth/AuthSignUpForm.vue';
 import AuthVerification from '@/components/auth/AuthVerification.vue';
@@ -41,6 +44,21 @@ const routes = [
             path: 'reset-password',
             name: 'auth.resetPassword',
             component: AuthResetPassword,
+         },
+         {
+            path: 'google',
+            name: 'auth.google',
+            component: AuthGoogle,
+         },
+         {
+            path: 'github',
+            name: 'auth.github',
+            component: AuthGithub,
+         },
+         {
+            path: 'facebook',
+            name: 'auth.facebook',
+            component: AuthFacebook,
          },
       ],
       meta: {

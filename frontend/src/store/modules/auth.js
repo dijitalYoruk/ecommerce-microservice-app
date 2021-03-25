@@ -41,6 +41,42 @@ const actions = {
       commit('setCurrentUser', user);
       return user;
    }),
+   signInGoogle: catchError(async ({ commit, rootState }, payload) => { 
+      const response = await axios.post(URL.SIGN_IN_GOOGLE, payload);
+      const data = response.data.data;
+      const user = data.user;
+      const accessToken = data.token;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('user', JSON.stringify(user));
+      commit('setAccessToken', accessToken);
+      commit('setCurrentUser', user);
+      return user;
+   }),
+   signInGithub: catchError(async ({ commit, rootState }, payload) => { 
+      const response = await axios.post(URL.SIGN_IN_GITHUB, payload);
+      const data = response.data.data;
+      const user = data.user;
+      const accessToken = data.token;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('user', JSON.stringify(user));
+      commit('setAccessToken', accessToken);
+      commit('setCurrentUser', user);
+      return user;
+   }),
+   signInFacebook: catchError(async ({ commit, rootState }, payload) => { 
+      const response = await axios.post(URL.SIGN_IN_FACEBOOK, payload);
+      const data = response.data.data;
+      const user = data.user;
+      const accessToken = data.token;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('user', JSON.stringify(user));
+      commit('setAccessToken', accessToken);
+      commit('setCurrentUser', user);
+      return user;
+   }),
    signUpUser: catchError(async ({ commit, rootState }, payload) => { 
       const response = await axios.post(URL.SIGN_UP, payload);
       return response.data.data;
@@ -57,6 +93,18 @@ const actions = {
       const response = await axios.post(URL.RESET_PASSWORD, payload);
       return response.data.data.message;
    }),
+   getGoogleAuthURL: catchError(async ({ commit, rootState }, payload) => { 
+      const response = await axios.get(URL.GOOGLE_AUTH_URL);
+      return response.data.data.googleURL
+   }),
+   getGithubAuthURL: catchError(async ({ commit, rootState }, payload) => { 
+      const response = await axios.get(URL.GITHUB_AUTH_URL);
+      return response.data.data.githubURL
+   }),
+   getFacebookAuthURL: catchError(async ({ commit, rootState }, payload) => { 
+      const response = await axios.get(URL.FACEBOOK_AUTH_URL);
+      return response.data.data.facebookURL
+   })
 };
 
 const getters = {
