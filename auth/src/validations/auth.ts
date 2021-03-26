@@ -2,7 +2,7 @@ import { __ } from 'i18n';
 import { body } from 'express-validator';
 import { extractValidationErrors } from '../util/util'
 
-const validateSignUpJWT = [
+const validateSignUp = [
    body('email')
       .isEmail()
       .withMessage(__('validation_request', __('email'))),
@@ -24,7 +24,7 @@ const validateSignUpJWT = [
    extractValidationErrors   
 ]
 
-const validateSignInJWT = [
+const validateSignIn = [
    body('usernameOrEmail')
       .notEmpty()
       .withMessage(__('validation_request', `${__('username')} ${__('or')} ${__('email')}`)),
@@ -99,8 +99,8 @@ const validateResetPassword = [
 ]
 
 export {
-   validateSignInJWT,
-   validateSignUpJWT,
+   validateSignIn,
+   validateSignUp,
    validateVerification,
    validateSignInGithub,
    validateSignInGoogle,

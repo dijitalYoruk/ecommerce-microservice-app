@@ -1,16 +1,11 @@
-export interface RequestSignUpJWT {
+export interface RequestSignUp {
    email: string,
    username: string,
    password: string,
    passwordConfirm: string
 }
 
-export interface RequestSignInJWT {
-   password: string,
-   usernameOrEmail: string,
-}
-
-export interface RequestSignInGoogle {
+export interface RequestSignIn {
    password: string,
    usernameOrEmail: string,
 }

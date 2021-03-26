@@ -7,16 +7,15 @@ import Email from '../services/emailService';
 import { generateToken } from '../util/util';
 import BadRequestError from '../errors/badRequestError';
 import NotAuthorizedError from '../errors/notAuthorizedError';
-import { RequestSignUpJWT, RequestSignInJWT } from '../requests/auth';
+import { RequestSignUp, RequestSignIn } from '../requests/auth';
 
 // model
 import { __ } from 'i18n';
 import User from '../models/user';
 
 // methods
-
 let signUp = async (req: Request, res: Response) => {
-   const body: RequestSignUpJWT = req.body;
+   const body: RequestSignUp = req.body;
    const verificationToken = generateToken();
 
    const user = User.build({
@@ -37,7 +36,7 @@ let signUp = async (req: Request, res: Response) => {
 
 let signIn = async (req: Request, res: Response) => {
    // parsing body
-   const body: RequestSignInJWT = req.body;
+   const body: RequestSignIn = req.body;
 
    // checking whether user exists in db.
    const user = await User.findOne({
@@ -139,7 +138,7 @@ const forgotPassword = async (req: Request, res: Response) => {
    }
 
    if (!user.isVerified) {
-      throw new BadRequestError(__('error_not_verified'));
+      throw new NotAuthorizedError(__('error_not_verified'));
    }
 
    user.passwordResetToken = generateToken();

@@ -23,6 +23,28 @@ spec:
             value: "3000" 
           - name: MONGO_HOST
             value: "mongodb://ticketing-mongo-auth-srv:27017/auth"
+          - name: SG_API_KEY
+            value: "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"
+          - name: SG_SENDER_EMAIL
+            value: "fatihsevban.bilkent@gmail.com"
+          - name: GITHUB_CLIENT_ID
+            value: "d190a1ee223e5d363517"
+          - name: GITHUB_CLIENT_SECRET
+            value: "5d44fa0dc1b262ec3a2fa5445026564b3f15e4db"
+          - name: GITHUB_REDIRECT_URL
+            value: "https://localhost/auth/github"
+          - name: FACEBOOK_CLIENT_ID
+            value: "153316223236099"
+          - name: FACEBOOK_CLIENT_SECRET
+            value: "409a464db2cefea10ae3bd456660c27b"
+          - name: FACEBOOK_REDIRECT_URL
+            value: "https://localhost/auth/facebook"
+          - name: GOOGLE_CLIENT_ID
+            value: "270719396529-au8f8psrrcv4cthstrr9hvrampc0i9tm.apps.googleusercontent.com"
+          - name: GOOGLE_CLIENT_SECRET
+            value: "qJafSqDIOL1dTUu4spWr-vs_"
+          - name: GOOGLE_REDIRECT_URL
+            value: "https://localhost/auth/google"
 ---
 apiVersion: v1
 kind: Service

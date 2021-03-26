@@ -29,33 +29,16 @@
       </form>
 
       <v-divider class="my-3"></v-divider>
-
-      <div class="text-center">
-         <v-btn @click="signInGithub()" class="mx-2 elevation-0" fab dark large color="primary">
-            <v-icon dark>
-               mdi-github
-            </v-icon>
-         </v-btn>
-
-         <v-btn @click="signInGoogle()" class="mx-2 elevation-0" fab dark large color="primary">
-            <v-icon dark>
-               mdi-google
-            </v-icon>
-         </v-btn>
-
-         <v-btn @click="signInFacebook()" class="mx-2 elevation-0" fab dark large color="primary">
-            <v-icon dark>
-               mdi-facebook
-            </v-icon>
-         </v-btn>
-      </div>
+      <AuthAlternative></AuthAlternative>
    </div>
 </template>
 
 <script>
 import { required, minLength } from 'vuelidate/lib/validators';
+import AuthAlternative from '@/components/auth/AuthAlternative.vue';
 
 export default {
+   components: { AuthAlternative },
    data() {
       return {
          usernameOrEmail: '',
@@ -96,30 +79,7 @@ export default {
             this.$toast.error(exception);
          }
       },
-      async signInGithub() {
-         try {
-            const url = await this.$store.dispatch('getGithubAuthURL');
-            window.location.href = url
-         } catch (exception) {
-            this.$toast.error(exception);
-         }
-      },
-      async signInGoogle() {
-         try {
-            const url = await this.$store.dispatch('getGoogleAuthURL');
-            window.location.href = url
-         } catch (exception) {
-            this.$toast.error(exception);
-         }
-      },
-      async signInFacebook() {
-         try {
-            const url = await this.$store.dispatch('getFacebookAuthURL');
-            window.location.href = url
-         } catch (exception) {
-            this.$toast.error(exception);
-         }
-      }
+      
    },
 };
 </script>

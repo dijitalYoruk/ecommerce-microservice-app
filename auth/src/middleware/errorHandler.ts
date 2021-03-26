@@ -38,8 +38,6 @@ const handleUnexpectedError = () => {
 
 export default (err, req: Request, res: Response, next: NextFunction) => {
 
-   console.log(err)
-
    if (err.name === 'CastError') { 
       err = handleCastErrorDB(err)
    } else if (err.code === 11000) {

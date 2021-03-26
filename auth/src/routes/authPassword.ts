@@ -14,8 +14,8 @@ import {
 
 // validations
 import {
-   validateSignUpJWT,
-   validateSignInJWT,
+   validateSignUp,
+   validateSignIn,
    validateVerification,
    validateResendVerification,
    validateForgotPassword,
@@ -23,8 +23,8 @@ import {
 } from '../validations/auth';
 
 // routes
-routerAuth.post('/signUp', validateSignUpJWT, signUp);
-routerAuth.post('/signIn', validateSignInJWT, signIn);
+routerAuth.post('/signUp', validateSignUp, signUp);
+routerAuth.post('/signIn', validateSignIn, signIn);
 routerAuth.post('/verify', validateVerification, verifyUser);
 routerAuth.post('/resetPassword', validateResetPassword, resetPassword);
 routerAuth.post('/forgotPassword', validateForgotPassword, forgotPassword);

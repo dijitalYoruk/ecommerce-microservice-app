@@ -4,7 +4,7 @@ import Keys from '../util/keys';
 import sgMail from '@sendgrid/mail';
 import EmailServiceError from '../errors/emailServiceError'
 
-sgMail.setApiKey(Keys.SG_API_KEY);
+sgMail.setApiKey(Keys.SG_API_KEY!);
 
 export default class Email {
 
@@ -30,12 +30,14 @@ export default class Email {
    }
 
    private static async sendMail(to: string, subject: string, html: string, text: string = '-') {
-      const from = Keys.SG_SENDER_EMAIL
+      if (process.env.NODE_ENV === 'test') return;
+      const from = Keys.SG_SENDER_EMAIL!
       const email = { from, to, subject, text, html }; 
 
       try {
          await sgMail.send(email)
       } catch (exception) {
+         console.log(exception)
          throw new EmailServiceError()
       }
    }
