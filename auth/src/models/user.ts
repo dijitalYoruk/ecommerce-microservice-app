@@ -97,6 +97,11 @@ const UserSchema = new Schema({
          delete ret.authType;
          delete ret.password;
          delete ret.isVerified;
+         delete ret.passwordConfirm;
+         delete ret.verificationToken;
+         delete ret.passwordResetToken;
+         delete ret.verificationExpires;
+         delete ret.passwordResetExpires;
       }
    }
 })

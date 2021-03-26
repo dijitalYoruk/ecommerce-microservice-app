@@ -1,12 +1,10 @@
 import axios from "axios"
-import Keys from "@/util/keys"
+//import Keys from "@/util/keys"
 
 // constants
 const CONTEXT_PATH = "api"
 const ACCEPTS = 'application/json'
 const CONTENT_TYPE = 'application/json'
-
-console.log(Keys)
 
 const axiosInstance = axios.create({
     baseURL: `http://localhost/${CONTEXT_PATH}/`,
@@ -22,6 +20,7 @@ export const URL = {
     VERIFY: 'auth/verify',
     SIGN_IN: 'auth/signIn',
     SIGN_UP: 'auth/signUp',
+    CURRENT_USER: 'auth/currentUser',
     SIGN_IN_GOOGLE: 'auth/google/signIn',
     SIGN_IN_GITHUB: 'auth/github/signIn',
     SIGN_IN_FACEBOOK: 'auth/facebook/signIn',

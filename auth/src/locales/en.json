@@ -24,6 +24,7 @@
 	"error_invalid_credentials": "Invalid Credentials",
 	"error_user_already_verified": "User already verified.",
 	"error_already_in_use": "%s is already in use. Please use another value!",
+	"error_not_logged_in": "You are not logged in! Please log in to get access.",
 	"error_wrong_auth_type": "You registered to the application via %s, Please sign in via %s.",
 	"validation_request": "Please provide %s.",
 	"validation_min_length": "Password should be at least 8 characters long.",

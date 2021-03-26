@@ -37,7 +37,6 @@ export default class Email {
       try {
          await sgMail.send(email)
       } catch (exception) {
-         console.log(exception)
          throw new EmailServiceError()
       }
    }

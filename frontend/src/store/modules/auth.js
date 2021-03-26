@@ -28,58 +28,38 @@ const mutations = {
    },
 };
 
+const signIn = async (url, payload, commit) => {
+   const response = await axios.post(url, payload);
+   const { token: accessToken, user } = response.data.data;
+   localStorage.setItem('accessToken', accessToken);
+   localStorage.setItem('user', JSON.stringify(user));
+   commit('setAccessToken', accessToken);
+   commit('setCurrentUser', user);
+   return user;
+}
+
 const actions = {
    signInUser: catchError(async ({ commit, rootState }, payload) => {
-      const response = await axios.post(URL.SIGN_IN, payload);
-      const data = response.data.data;
-      const user = data.user;
-      const accessToken = data.token;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
-      commit('setAccessToken', accessToken);
-      commit('setCurrentUser', user);
-      return user;
+      return await signIn(URL.SIGN_IN, payload, commit)
    }),
    signInGoogle: catchError(async ({ commit, rootState }, payload) => { 
-      const response = await axios.post(URL.SIGN_IN_GOOGLE, payload);
-      const data = response.data.data;
-      const user = data.user;
-      const accessToken = data.token;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
-      commit('setAccessToken', accessToken);
-      commit('setCurrentUser', user);
-      return user;
+      return await signIn(URL.SIGN_IN_GOOGLE, payload, commit)
    }),
    signInGithub: catchError(async ({ commit, rootState }, payload) => { 
-      const response = await axios.post(URL.SIGN_IN_GITHUB, payload);
-      const data = response.data.data;
-      const user = data.user;
-      const accessToken = data.token;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
-      commit('setAccessToken', accessToken);
-      commit('setCurrentUser', user);
-      return user;
+      return await signIn(URL.SIGN_IN_GITHUB, payload, commit)
    }),
    signInFacebook: catchError(async ({ commit, rootState }, payload) => { 
-      const response = await axios.post(URL.SIGN_IN_FACEBOOK, payload);
-      const data = response.data.data;
-      const user = data.user;
-      const accessToken = data.token;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
-      commit('setAccessToken', accessToken);
-      commit('setCurrentUser', user);
-      return user;
+      return await signIn(URL.SIGN_IN_FACEBOOK, payload, commit)
    }),
    signUpUser: catchError(async ({ commit, rootState }, payload) => { 
       const response = await axios.post(URL.SIGN_UP, payload);
       return response.data.data;
+   }),
+   retrieveCurrentUser: catchError(async ({ commit, rootState }) => { 
+      const response = await axios.get(URL.CURRENT_USER, {
+         headers: { 'Authorization': `Bearer ${state.accessToken}` }
+      })
+      return response.data.data.user
    }),
    verifyUser: catchError(async ({ commit, rootState }, payload) => { 
       const response = await axios.post(URL.VERIFY, payload);

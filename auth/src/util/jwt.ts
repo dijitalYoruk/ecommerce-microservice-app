@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import keys from '../util/keys';
-import { promisify } from 'util';
 import { Request } from 'express';
 
 interface JwtCredentials {
@@ -15,7 +14,7 @@ export default class JWT {
    }
 
    public static async decode(token: string) {
-      return await promisify<string, string>(jwt.verify)(token, keys.JWT_SECRET!);
+      return jwt.verify(token, keys.JWT_SECRET!);
    }
 
    public static retrieveJWTtoken = (req: Request) => {

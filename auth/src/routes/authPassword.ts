@@ -1,5 +1,6 @@
 // imports
 import { Router } from 'express';
+import authenticated from '../middleware/authenticated';
 const routerAuth = Router();
 
 // methods
@@ -9,6 +10,7 @@ import {
    verifyUser,
    resetPassword,
    forgotPassword,
+   retrieveCurrentUser,
    resendVerificationEmail 
 } from '../controllers/authPassword';
 
@@ -26,6 +28,7 @@ import {
 routerAuth.post('/signUp', validateSignUp, signUp);
 routerAuth.post('/signIn', validateSignIn, signIn);
 routerAuth.post('/verify', validateVerification, verifyUser);
+routerAuth.get('/currentUser', authenticated, retrieveCurrentUser);
 routerAuth.post('/resetPassword', validateResetPassword, resetPassword);
 routerAuth.post('/forgotPassword', validateForgotPassword, forgotPassword);
 routerAuth.post('/resendVerification', validateResendVerification, resendVerificationEmail);

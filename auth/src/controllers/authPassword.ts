@@ -149,7 +149,7 @@ const forgotPassword = async (req: Request, res: Response) => {
 
    res.status(200).json({
       status: 200,
-      data: { message: __('success_password_reset_email') }
+      data: { message: __('success_password_reset_email') },
    });
 };
 
@@ -177,8 +177,21 @@ const resetPassword = async (req: Request, res: Response) => {
 
    res.status(200).json({
       status: 200,
-      data: { message: __('entity_updated', __('Password')) }
+      data: { message: __('entity_updated', __('Password')) },
    });
 };
 
-export { signUp, signIn, verifyUser, resendVerificationEmail, forgotPassword, resetPassword };
+const retrieveCurrentUser = async (req, res) => {
+   const jwtData = req.currentUserJWT;
+   const currentUser = await User.findById(jwtData?.id);
+
+   res.status(200).send({
+      status: 200,
+      data: {
+         user: currentUser,
+      },
+   });
+};
+
+export { signUp, signIn, verifyUser, resendVerificationEmail, 
+   forgotPassword, resetPassword, retrieveCurrentUser };
