@@ -1,0 +1,30 @@
+{
+  "name": "@conqueror-ecommerce/common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "clean": "del ./build/*",
+    "build": "npm run clean && tsc",
+    "pub": "git add . && git commit -m \"Common Package Updated\" && npm version patch && npm run build && npm publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.11",
+    "@types/i18n": "^0.13.0",
+    "@types/jsonwebtoken": "^8.5.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "i18n": "^0.13.2",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3",
+    "del-cli": "^3.0.1"
+  }
+}
