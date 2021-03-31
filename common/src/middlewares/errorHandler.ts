@@ -36,7 +36,7 @@ const handleUnexpectedError = () => {
    return new BadRequestError(message)
 }
 
-export default (err, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err, req: Request, res: Response, next: NextFunction) => {
 
    if (err.name === 'CastError') { 
       err = handleCastErrorDB(err)

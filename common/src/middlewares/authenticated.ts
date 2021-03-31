@@ -28,7 +28,7 @@ const retrieveJWTtoken = (req: Request) => {
    return token 
 }
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export const authenticated =  async (req: Request, res: Response, next: NextFunction) => {
    // getting the jwt token
    const token = retrieveJWTtoken(req);
 
