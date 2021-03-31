@@ -1,6 +1,6 @@
 import CustomError from './customError';
 
-export default class NotAuthorizedError extends CustomError {
+export class NotAuthorizedError extends CustomError {
    status = 401;
 
    constructor(public message: string) {

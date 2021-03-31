@@ -2,7 +2,7 @@ import { __ } from 'i18n';
 import CustomError from './customError';
 import { ValidationError } from 'express-validator';
 
-export default class RequestValidationError extends CustomError {
+export class RequestValidationError extends CustomError {
    status = 400;
 
    constructor(public errors: ValidationError[]) {

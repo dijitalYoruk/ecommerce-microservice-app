@@ -1,7 +1,7 @@
 import { __ } from 'i18n'
 import CustomError from './customError'
 
-export default class EmailServiceError extends CustomError {
+export class EmailServiceError extends CustomError {
    status = 500
 
    constructor() {

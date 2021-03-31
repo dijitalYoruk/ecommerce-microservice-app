@@ -1,6 +1,6 @@
 import CustomError from './customError';
 
-export default class DatabaseError extends CustomError {
+export class DatabaseError extends CustomError {
    status = 400;
 
    constructor(public errors: string[]) {

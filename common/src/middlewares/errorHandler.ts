@@ -1,8 +1,8 @@
 import { __ } from 'i18n';
 import CustomError from '../errors/customError';
-import DatabaseError from '../errors/databaseError';
-import BadRequestError from '../errors/badRequestError';
-import NotAuthorizedError from '../errors/notAuthorizedError';
+import {DatabaseError} from '../errors/databaseError';
+import {BadRequestError} from '../errors/badRequestError';
+import {NotAuthorizedError} from '../errors/notAuthorizedError';
 import { Request, Response, NextFunction } from 'express';
 
 const handleCastErrorDB = err => {

@@ -1,7 +1,7 @@
 import { __ } from 'i18n';
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import NotAuthorizedError from '../errors/notAuthorizedError';
+import { NotAuthorizedError } from '../errors/notAuthorizedError';
 
 interface UserPayload {
    id: string;
