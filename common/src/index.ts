@@ -2,6 +2,7 @@ export * from './errors/customError';
 export * from './errors/databaseError';
 export * from './errors/notFoundError';
 export * from './errors/badRequestError';
+export * from './errors/emailServiceError';
 export * from './errors/notAuthorizedError';
 export * from './errors/requestValidationError';
 
