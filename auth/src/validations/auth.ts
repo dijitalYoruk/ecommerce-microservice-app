@@ -1,8 +1,8 @@
 import { __ } from 'i18n';
 import { body } from 'express-validator';
-import { extractValidationErrors } from '../util/util'
+import { validateRequest } from '@conqueror-ecommerce/common'
 
-const validateSignUp = [
+export const validateSignUp = [
    body('email')
       .isEmail()
       .withMessage(__('validation_request', __('email'))),
@@ -21,10 +21,10 @@ const validateSignUp = [
       .custom((value: string, { req }) => value === req.body.password)
       .withMessage('Passwords do not match.'),
    
-   extractValidationErrors   
+   validateRequest   
 ]
 
-const validateSignIn = [
+export const validateSignIn = [
    body('usernameOrEmail')
       .notEmpty()
       .withMessage(__('validation_request', `${__('username')} ${__('or')} ${__('email')}`)),
@@ -33,54 +33,57 @@ const validateSignIn = [
       .isLength({ min: 8 })
       .withMessage(__('validation_min_length', __('password'), '8')),
    
-   extractValidationErrors   
+   validateRequest   
 ]
 
-const validateSignInGoogle = [
+export const validateSignInGoogle = [
    body('code')
       .notEmpty()
       .withMessage(__('validation_request', __('authentication_code'))),
-   extractValidationErrors   
+
+   validateRequest   
 ]
 
-const validateSignInFacebook = [
+export const validateSignInFacebook = [
    body('code')
       .notEmpty()
       .withMessage(__('validation_request', __('authentication_code'))),
-   extractValidationErrors   
+
+   validateRequest   
 ]
 
-const validateSignInGithub = [
+export const validateSignInGithub = [
    body('code')
       .notEmpty()
       .withMessage(__('validation_request', __('authentication_code'))),
-   extractValidationErrors   
+   
+   validateRequest   
 ]
 
-const validateVerification = [
+export const validateVerification = [
    body('token')
       .notEmpty()
       .withMessage(__('validation_request', __('token'))),
-   extractValidationErrors   
+   validateRequest   
 ]
 
 
-const validateResendVerification = [
+export const validateResendVerification = [
    body('email')
       .isEmail()
       .withMessage(__('validation_request', __('email'))),
-   extractValidationErrors   
+   validateRequest   
 ]
 
 
-const validateForgotPassword = [
+export const validateForgotPassword = [
    body('usernameOrEmail')
       .notEmpty()
       .withMessage(__('validation_request', `${__('username')} ${__('or')} ${__('email')}`)),
-   extractValidationErrors   
+   validateRequest
 ]
 
-const validateResetPassword = [
+export const validateResetPassword = [
    body('token')
       .notEmpty()
       .withMessage(__('validation_request', __('token'))),
@@ -95,17 +98,5 @@ const validateResetPassword = [
       .custom((value: string, { req }) => value === req.body.password)
       .withMessage('Passwords do not match.'),
    
-   extractValidationErrors   
+   validateRequest      
 ]
-
-export {
-   validateSignIn,
-   validateSignUp,
-   validateVerification,
-   validateSignInGithub,
-   validateSignInGoogle,
-   validateResetPassword,
-   validateSignInFacebook,
-   validateForgotPassword,
-   validateResendVerification,
-}

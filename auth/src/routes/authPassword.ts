@@ -1,6 +1,6 @@
 // imports
 import { Router } from 'express';
-import authenticated from '../middleware/authenticated';
+import { authenticated } from '@conqueror-ecommerce/common';
 const routerAuth = Router();
 
 // methods

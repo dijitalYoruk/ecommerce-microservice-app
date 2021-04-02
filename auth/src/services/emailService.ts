@@ -2,7 +2,7 @@ import ejs from 'ejs';
 import path from 'path';
 import Keys from '../util/keys';
 import sgMail from '@sendgrid/mail';
-import EmailServiceError from '../errors/emailServiceError'
+import { EmailServiceError } from '@conqueror-ecommerce/common'
 
 sgMail.setApiKey(Keys.SG_API_KEY!);
 

@@ -27,6 +27,6 @@
 	"error_not_logged_in": "You are not logged in! Please log in to get access.",
 	"error_wrong_auth_type": "You registered to the application via %s, Please sign in via %s.",
 	"validation_request": "Please provide %s.",
-	"validation_min_length": "Password should be at least 8 characters long.",
+	"validation_min_length": "%s should be at least %s characters long.",
 	"Password": "Password"
 }

@@ -1,0 +1,18 @@
+{
+	"Title": "Title",
+	"placeholder": "placeholder",
+	"Product": "Product",
+	"productId": "Product Id",
+	"description": "description",
+	"invalid": "Invalid %s.",
+	"price": "price",
+	"error_authorization": "%s created successfully.",
+	"success_create": "%s created successfully.",
+	"success_update": "%s updated successfully.",
+	"error_not_logged_in": "You are not logged in! Please log in to get access.",
+	"validation_request": "Please provide %s",
+	"validation_min_length": "validation_min_length",
+	"error_invalid_params": "error_invalid_params",
+	"route": "route",
+	"error_not_found": "error_not_found"
+}

@@ -5,16 +5,15 @@ import Password from '../util/password';
 import { Request, Response } from 'express';
 import Email from '../services/emailService';
 import { generateToken } from '../util/util';
-import BadRequestError from '../errors/badRequestError';
-import NotAuthorizedError from '../errors/notAuthorizedError';
 import { RequestSignUp, RequestSignIn } from '../requests/auth';
+import { BadRequestError, NotAuthorizedError } from '@conqueror-ecommerce/common';
 
 // model
 import { __ } from 'i18n';
 import User from '../models/user';
 
 // methods
-let signUp = async (req: Request, res: Response) => {
+const signUp = async (req: Request, res: Response) => {
    const body: RequestSignUp = req.body;
    const verificationToken = generateToken();
 
@@ -34,7 +33,7 @@ let signUp = async (req: Request, res: Response) => {
    });
 };
 
-let signIn = async (req: Request, res: Response) => {
+const signIn = async (req: Request, res: Response) => {
    // parsing body
    const body: RequestSignIn = req.body;
 
