@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticketing-auth-depl
+  name: auth-depl
 spec:
   selector:
     matchLabels:
-      app: ticketing-auth
+      app: auth
   template:
     metadata:
       labels:
-        app: ticketing-auth
+        app: auth
     spec:
       containers:
-      - name: ticketing-auth
-        image: fatihsevban/ticketing-auth
+      - name: auth
+        image: fatihsevban/ecommerce-auth
         env:
           - name: JWT_SECRET
             value: "naber_la_gevsek"
@@ -22,7 +22,7 @@ spec:
           - name: SERVER_PORT
             value: "3000" 
           - name: MONGO_HOST
-            value: "mongodb://ticketing-mongo-auth-srv:27017/auth"
+            value: "mongodb://auth-mongo-srv:27017/auth"
           - name: SG_API_KEY
             value: "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"
           - name: SG_SENDER_EMAIL
@@ -49,12 +49,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:  ticketing-auth-srv
+  name: auth-srv
 spec:
   selector:
-    app: ticketing-auth
+    app: auth
   type:  ClusterIP
   ports:
-    - name:  ticketing-auth
-      port:  3000
-      targetPort:  3000
+    - name: auth
+      port: 3000
+      targetPort: 3000

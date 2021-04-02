@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-depl
+spec:
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+      - name: product
+        image: fatihsevban/ecommerce-product
+        env:
+          - name: JWT_SECRET
+            value: "naber_la_gevsek"
+          - name: JWT_EXPIRES_IN
+            value: "90d"
+          - name: SERVER_PORT
+            value: "3000" 
+          - name: MONGO_HOST
+            value: "mongodb://product-mongo-srv:27017/product"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-srv
+spec:
+  selector:
+    app: product
+  type:  ClusterIP
+  ports:
+    - name: product
+      port: 3000
+      targetPort: 3000

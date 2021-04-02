@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticketing-frontend-depl
+  name: frontend-depl
 spec:
   selector:
     matchLabels:
-      app: ticketing-frontend
+      app: frontend
   template:
     metadata:
       labels:
-        app: ticketing-frontend
+        app: frontend
     spec:
       containers:
-      - name: ticketing-frontend
-        image: fatihsevban/ticketing-frontend
+      - name: frontend
+        image: fatihsevban/ecommerce-frontend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name:  ticketing-frontend-srv
+  name:  frontend-srv
 spec:
   selector:
-    app: ticketing-frontend
+    app: frontend
   type:  ClusterIP
   ports:
-    - name:  ticketing-frontend
+    - name:  frontend
       port:  8080
       targetPort:  8080

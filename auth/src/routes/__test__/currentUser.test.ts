@@ -31,8 +31,6 @@ const registerAndSignIn = async() => {
             .post('/api/auth/signIn')
             .send(body2)
             .expect(200);
-   
-   console.log(response.body)
 
    return response.body.data.token
 }

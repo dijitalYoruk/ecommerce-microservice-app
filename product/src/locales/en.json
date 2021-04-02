@@ -11,7 +11,7 @@
 	"success_update": "%s updated successfully.",
 	"error_not_logged_in": "You are not logged in! Please log in to get access.",
 	"validation_request": "Please provide %s",
-	"validation_min_length": "validation_min_length",
+	"validation_min_length": "The length of %s needs to be at least %s characters.",
 	"error_invalid_params": "error_invalid_params",
 	"route": "route",
 	"error_not_found": "error_not_found"

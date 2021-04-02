@@ -1,4 +1,5 @@
 import { app } from './app';
+import keys from './util/keys';
 
 // Mongo Config
 import './services/mongo';
@@ -10,6 +11,6 @@ process.on('uncaughtException', err => {
 });
 
 // Server Connection
-app.listen(3000, () => {
-   console.log(`Server running on Port ${3000}`);
+app.listen(keys.SERVER_PORT, () => {
+   console.log(`Server running on Port ${keys.SERVER_PORT}`);
 });

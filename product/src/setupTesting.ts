@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 declare global {
@@ -39,7 +39,7 @@ global.signin = () => {
    const payload = {
       username: 'testUser',
       email: 'test@test.com',
-      id: new mongoose.Types.ObjectId().toHexString(),
+      id: new Types.ObjectId().toHexString(),
    };
 
    // Create the JWT!

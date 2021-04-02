@@ -13,13 +13,20 @@ spec:
             path: "/api/auth/?(.*)"
             backend: 
               service:
-                name: ticketing-auth-srv
+                name: auth-srv
+                port:
+                  number: 3000
+          - pathType: Prefix
+            path: "/api/product/?(.*)"
+            backend: 
+              service:
+                name: product-srv
                 port:
                   number: 3000
           - pathType: Prefix
             path: "/?(.*)"
             backend: 
               service:
-                name: ticketing-frontend-srv
+                name: frontend-srv
                 port:
                   number: 8080

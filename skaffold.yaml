@@ -8,15 +8,23 @@ build:
   local:
     push: false
   artifacts:
-    - image: fatihsevban/ticketing-auth
+    - image: fatihsevban/ecommerce-auth
       context: auth
       docker:
         dockerfile: Dockerfile
       sync:
         infer: 
           - '**/*'
+
+    - image: fatihsevban/ecommerce-product
+      context: product
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        infer: 
+          - '**/*'
           
-    - image: fatihsevban/ticketing-frontend
+    - image: fatihsevban/ecommerce-frontend
       context: frontend
       docker:
         dockerfile: Dockerfile

@@ -11,10 +11,10 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "setupFiles": [
-      "./src/tests/setupTestEnv.ts"
+      "./src/setupTestEnv.ts"
     ],
     "setupFilesAfterEnv": [
-      "./src/tests/setup.ts"
+      "./src/setupTesting.ts"
     ]
   },
   "author": "",
