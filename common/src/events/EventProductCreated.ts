@@ -6,5 +6,7 @@ export interface EventProductCreated {
       id: string,
       title: string,
       price: number,
+      authorId: string,
+      description: string,
    }
 }
