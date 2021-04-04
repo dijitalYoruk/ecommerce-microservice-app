@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "pub": "git add . && git commit -m \"Common Package Updated\" && npm version patch && npm run build && npm publish"
+    "publish-common": "git add . && git commit -m \"Common Package Updated\" && npm version patch && npm run build && npm publish"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +20,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "i18n": "^0.13.2",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "node-nats-streaming": "^0.3.2"
   },
   "devDependencies": {
     "typescript": "^4.2.3",
