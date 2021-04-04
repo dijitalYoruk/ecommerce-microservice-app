@@ -9,3 +9,10 @@ export * from './errors/requestValidationError';
 export * from './middlewares/authenticated';
 export * from './middlewares/errorHandler';
 export * from './middlewares/validateRequest';
+
+export * from './events/BaseListener';
+export * from './events/BasePublisher';
+export * from './events/NatsSubjects';
+export * from './events/EventProductCreated';
+export * from './events/EventProductUpdated';
+
