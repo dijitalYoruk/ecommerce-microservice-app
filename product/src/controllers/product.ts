@@ -1,15 +1,18 @@
-import { Request, Response } from 'express';
-import { RequestCreateProduct, RequestUpdateProduct } from '../request/product'
-import { NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
-import Product from '../models/product';
-
 import { __ } from 'i18n';
-
+import Product from '../models/product';
+import { Request, Response } from 'express';
+import PublisherProductCreated from '../publishers/PublisherProductCreated';
+import PublisherProductUpdated from '../publishers/PublisherProductUpdated';
+import { RequestCreateProduct, RequestUpdateProduct } from '../request/product';
+import { NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
 
 export const createProduct = async (req: Request, res: Response) => {
    const body: RequestCreateProduct = req.body;
    const product = Product.build({ ...body, authorId: req.currentUserJWT?.id! });
    await product.save();
+
+   const { _id:id, title, description, price, authorId } = product;
+   await PublisherProductCreated.publish({ id, title, description, price, authorId})
 
    res.status(200).json({
       status: 200,
@@ -19,7 +22,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
    const body: RequestUpdateProduct = req.body;
-   const product = await Product.findById(body.productId);
+   let product = await Product.findById(body.productId);
 
    if (!product) {
       throw new NotFoundError();
@@ -31,7 +34,10 @@ export const updateProduct = async (req: Request, res: Response) => {
 
    body.productId = undefined;
    product.set(body)
-   await product.save();
+   product = await product.save();
+
+   const { _id:id, title, description, price, authorId } = product;
+   await PublisherProductUpdated.publish({ id, title, description, price, authorId})
 
    res.status(200).json({
       status: 200,

@@ -23,6 +23,14 @@ spec:
             value: "3000" 
           - name: MONGO_HOST
             value: "mongodb://product-mongo-srv:27017/product"
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+          - name: NATS_CLUSTER_ID
+            value: ecommerce
 ---
 apiVersion: v1
 kind: Service

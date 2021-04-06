@@ -1,7 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Types } from 'mongoose';
+import {Types} from 'mongoose';
 import Product from '../../models/product';
+import NatsService from '../../services/NatsService';
 
 const description = 'new description new description \
                      new description new description \
@@ -16,7 +17,6 @@ it('PUT:/api/product --> Unauthorized', async () => {
 });
 
 it('PUT:/api/product --> Success', async () => {
-
    const token = global.signin()
 
    const body1 = {
@@ -55,11 +55,11 @@ it('PUT:/api/product --> Success', async () => {
    expect(product.title).toEqual(body2.title)
    expect(product.placeholder).toEqual(body2.placeholder)
    expect(product.description).toEqual(body2.description)
+   expect(NatsService.client?.publish).toHaveBeenCalled()
 });
 
 
 it('PUT:/api/product --> Update only title.', async () => {
-
    const token = global.signin()
 
    const body1 = {

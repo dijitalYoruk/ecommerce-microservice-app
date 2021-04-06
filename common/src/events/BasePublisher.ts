@@ -21,7 +21,6 @@ export abstract class BasePublisher<T extends Event> {
             if (error) reject(error);
             else { 
                resolve({});
-               console.log("published")
             }
             });
       });

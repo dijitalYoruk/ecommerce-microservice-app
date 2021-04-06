@@ -3,6 +3,7 @@ import Keys from './util/keys';
 
 // Mongo Config
 import './services/mongo';
+import './services/NatsService';
 
 // Exception Catcher
 process.on('uncaughtException', err => {
