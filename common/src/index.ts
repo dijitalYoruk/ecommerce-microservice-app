@@ -10,9 +10,11 @@ export * from './middlewares/authenticated';
 export * from './middlewares/errorHandler';
 export * from './middlewares/validateRequest';
 
+export * from './types/NatsSubjects';
+export * from './types/OrderStatus';
+
 export * from './events/BaseListener';
 export * from './events/BasePublisher';
-export * from './events/NatsSubjects';
 export * from './events/EventProductCreated';
 export * from './events/EventProductUpdated';
 

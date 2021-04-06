@@ -1,4 +1,4 @@
-import { NatsSubjects } from './NatsSubjects'
+import { NatsSubjects } from '../types/NatsSubjects'
 
 export interface EventProductUpdated {
    subject: NatsSubjects.ProductUpdated,
