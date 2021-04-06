@@ -1,9 +1,8 @@
 import { app } from './app';
 import Keys from './util/keys';
 
-// Mongo Config
-import './services/mongo';
-import './services/NatsService';
+import './services/mongo'; // Mongo Config
+import './services/NatsService'; // NATS Config
 
 // Exception Catcher
 process.on('uncaughtException', err => {

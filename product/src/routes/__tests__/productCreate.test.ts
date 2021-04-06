@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import Product from '../../models/product';
-import NatsService from '../../services/NatsService';
+import { client } from '../../services/NatsService';
 
 const description = 'new description new description \
                      new description new description \
@@ -41,7 +41,7 @@ it('POST:/api/product --> Success', async () => {
    expect(product.title).toEqual(body.title)
    expect(product.placeholder).toEqual(body.placeholder)
    expect(product.description).toEqual(body.description)
-   expect(NatsService.client?.publish).toHaveBeenCalled()
+   expect(client.publish).toHaveBeenCalled()
 });
 
 

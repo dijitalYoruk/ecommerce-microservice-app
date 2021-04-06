@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import {Types} from 'mongoose';
+import mongoose from 'mongoose';
 import Product from '../../models/product';
-import NatsService from '../../services/NatsService';
+import { client } from '../../services/NatsService';
 
 const description = 'new description new description \
                      new description new description \
@@ -55,7 +55,7 @@ it('PUT:/api/product --> Success', async () => {
    expect(product.title).toEqual(body2.title)
    expect(product.placeholder).toEqual(body2.placeholder)
    expect(product.description).toEqual(body2.description)
-   expect(NatsService.client?.publish).toHaveBeenCalled()
+   expect(client.publish).toHaveBeenCalled()
 });
 
 
@@ -177,11 +177,13 @@ it('PUT:/api/product --> Wrong Author', async () => {
       placeholder: 'new placeholder',
    };
 
-   await request(app)
+   const response  = await request(app)
       .post('/api/product')
       .set('Authorization', global.signin())
       .send(body1)
       .expect(200);
+
+   console.log(response.body)
 
    let data = await Product.find({})
 
@@ -203,7 +205,7 @@ it('PUT:/api/product --> Wrong Author', async () => {
 it('PUT:/api/product --> Wrong Price', async () => {
    const body2 = {
       price: -200,
-      productId: new Types.ObjectId().toHexString(),
+      productId: new mongoose.Types.ObjectId().toHexString(),
    };
 
    await request(app)
@@ -216,7 +218,7 @@ it('PUT:/api/product --> Wrong Price', async () => {
 it('PUT:/api/product --> Wrong Description', async () => {
    const body2 = {
       description: '',
-      productId: new Types.ObjectId().toHexString(),
+      productId: new mongoose.Types.ObjectId().toHexString(),
    };
 
    await request(app)
@@ -229,7 +231,7 @@ it('PUT:/api/product --> Wrong Description', async () => {
 it('PUT:/api/product --> Wrong Placeholder', async () => {
    const body2 = {
       placeholder: '',
-      productId: new Types.ObjectId().toHexString(),
+      productId: new mongoose.Types.ObjectId().toHexString(),
    };
 
    await request(app)

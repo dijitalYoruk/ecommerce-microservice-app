@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-jest.mock('./services/NatsService.ts');
+jest.mock('./services/NatsService', () => jest.requireActual('./__mocks__/NatsService'))
 
 declare global {
    namespace NodeJS {
@@ -42,7 +42,7 @@ global.signin = () => {
    const payload = {
       username: 'testUser',
       email: 'test@test.com',
-      id: new Types.ObjectId().toHexString(),
+      id: new mongoose.Types.ObjectId().toHexString(),
    };
 
    // Create the JWT!

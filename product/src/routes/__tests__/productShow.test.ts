@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import Product from '../../models/product';
 
 const description = 'new description new description \
@@ -9,7 +9,7 @@ const description = 'new description new description \
                      new description new description';
 
 it('GET:/api/product/:id --> Unauthorized', async () => {
-   const productId = new Types.ObjectId().toHexString();
+   const productId = new mongoose.Types.ObjectId().toHexString();
 
    await request(app)
       .get(`/api/product/${productId}`)
@@ -43,7 +43,7 @@ it('GET:/api/product/:id --> Success', async () => {
 });
 
 it('GET:/api/product/:id --> Wrong Product', async () => {
-   const productId = new Types.ObjectId().toHexString();
+   const productId = new mongoose.Types.ObjectId().toHexString();
 
    await request(app)
       .get(`/api/product/${productId}`)

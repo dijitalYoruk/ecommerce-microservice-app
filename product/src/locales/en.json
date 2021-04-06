@@ -14,5 +14,6 @@
 	"validation_min_length": "The length of %s needs to be at least %s characters.",
 	"error_invalid_params": "error_invalid_params",
 	"route": "route",
-	"error_not_found": "error_not_found"
+	"error_not_found": "error_not_found",
+	"error_server_error": "error_server_error"
 }
