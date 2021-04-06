@@ -49,6 +49,7 @@ export const errorHandler = (err, req: Request, res: Response, next: NextFunctio
    } else if (err.name === 'TokenExpiredError') {
       err = handleJWTExpiredError()
    } else if (!(err instanceof CustomError)) {
+      console.log(err)
       err = handleUnexpectedError()
    }
    
