@@ -1,7 +1,7 @@
 import { NatsSubjects } from '../types/NatsSubjects';
 import { OrderStatus } from '../types/OrderStatus';
 
-export interface OrderCancelledEvent {
+export interface EventOrderCancelled {
    subject: NatsSubjects.OrderCancelled;
    data: {
       id: string;
