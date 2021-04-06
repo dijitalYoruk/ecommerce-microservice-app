@@ -2,7 +2,7 @@ import { NatsSubjects } from '../types/NatsSubjects';
 import { OrderStatus } from '../types/OrderStatus';
 
 export interface EventOrderCreated {
-   subject: NatsSubjects.OrderCancelled;
+   subject: NatsSubjects.OrderCreated;
    data: {
       id: string;
       version: number;
