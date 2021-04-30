@@ -7,6 +7,8 @@ export interface EventProductCreated {
       title: string,
       price: number,
       authorId: string,
+      quantity?: number,
       description: string,
+      isQuantityRestricted: boolean
    }
 }
