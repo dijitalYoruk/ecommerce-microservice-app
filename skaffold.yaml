@@ -24,6 +24,14 @@ build:
         infer: 
           - '**/*'
           
+    - image: fatihsevban/ecommerce-order
+      context: order
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        infer: 
+          - '**/*'
+
     - image: fatihsevban/ecommerce-frontend
       context: frontend
       docker:

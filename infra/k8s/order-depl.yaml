@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-depl
+spec:
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - name: order
+        image: fatihsevban/ecommerce-order
+        env:
+          - name: JWT_SECRET
+            value: "naber_la_gevsek"
+          - name: JWT_EXPIRES_IN
+            value: "90d"
+          - name: EXPIRATION_WINDOW_MINUTES
+            value: "5" 
+          - name: MONGO_HOST
+            value: "mongodb://order-mongo-srv:27017/order"
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+          - name: NATS_CLUSTER_ID
+            value: ecommerce
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-srv
+spec:
+  selector:
+    app: order
+  type:  ClusterIP
+  ports:
+    - name: order
+      port: 3000
+      targetPort: 3000
