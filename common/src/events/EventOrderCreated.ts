@@ -11,7 +11,8 @@ export interface EventOrderCreated {
       status: OrderStatus;
       products: {
          id: string;
-         price: number;
+         quantity: number,
+         unitSellPrice: number;
       }[]
    };
 }
