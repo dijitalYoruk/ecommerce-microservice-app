@@ -22,7 +22,9 @@ it('PUT:/api/product --> Success', async () => {
    const body1 = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
@@ -37,8 +39,10 @@ it('PUT:/api/product --> Success', async () => {
    const body2 = {
       price: 200,
       description,
+      quantity: 150,
       productId: data[0]._id,
       title: 'updated title',
+      isQuantityRestricted: true,
       placeholder: 'updated placeholder',
    };
 
@@ -50,22 +54,26 @@ it('PUT:/api/product --> Success', async () => {
 
    data = await Product.find({})
    expect(data.length).toEqual(1)
+
    const product = data[0]
+   expect(client.publish).toHaveBeenCalled()
    expect(product.price).toEqual(body2.price)
    expect(product.title).toEqual(body2.title)
+   expect(product.quantity).toEqual(body2.quantity)
    expect(product.placeholder).toEqual(body2.placeholder)
    expect(product.description).toEqual(body2.description)
-   expect(client.publish).toHaveBeenCalled()
 });
 
 
-it('PUT:/api/product --> Update only title.', async () => {
+it('PUT:/api/product --> Unrestrict Quantity Count', async () => {
    const token = global.signin()
 
    const body1 = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
@@ -78,45 +86,13 @@ it('PUT:/api/product --> Update only title.', async () => {
    let data = await Product.find({})
 
    const body2 = {
+      price: 500,
+      description,
+      quantity: 150,
+      productId: data[0]._id,
       title: 'updated title',
-      productId: data[0]._id
-   };
-
-   await request(app)
-      .put(`/api/product`)
-      .set('Authorization', token)
-      .send(body2)
-      .expect(200);
-
-   data = await Product.find({})
-   expect(data.length).toEqual(1)
-   const product = data[0]
-   expect(product.title).toEqual(body2.title)
-});
-
-
-it('PUT:/api/product --> Update only placeholder.', async () => {
-
-   const token = global.signin()
-
-   const body1 = {
-      price: 500,
-      description,
-      title: 'new title',
-      placeholder: 'new placeholder',
-   };
-
-   await request(app)
-      .post('/api/product')
-      .set('Authorization', token)
-      .send(body1)
-      .expect(200);
-
-   let data = await Product.find({})
-
-   const body2 = {
+      isQuantityRestricted: true,
       placeholder: 'updated placeholder',
-      productId: data[0]._id
    };
 
    await request(app)
@@ -127,31 +103,39 @@ it('PUT:/api/product --> Update only placeholder.', async () => {
 
    data = await Product.find({})
    expect(data.length).toEqual(1)
+
    const product = data[0]
+   expect(client.publish).toHaveBeenCalled()
+   expect(product.price).toEqual(body2.price)
+   expect(product.title).toEqual(body2.title)
+   expect(product.quantity).toEqual(body2.quantity)
    expect(product.placeholder).toEqual(body2.placeholder)
+   expect(product.description).toEqual(body2.description)
 });
+
 
 it('PUT:/api/product --> Update only price.', async () => {
-
    const token = global.signin()
 
-   const body1 = {
+   const body = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
    await request(app)
       .post('/api/product')
       .set('Authorization', token)
-      .send(body1)
+      .send(body)
       .expect(200);
 
    let data = await Product.find({})
 
    const body2 = {
-      price: 100,
+      isQuantityRestricted: false,
       productId: data[0]._id
    };
 
@@ -164,7 +148,8 @@ it('PUT:/api/product --> Update only price.', async () => {
    data = await Product.find({})
    expect(data.length).toEqual(1)
    const product = data[0]
-   expect(product.price).toEqual(body2.price)
+   expect(product.quantity).toEqual(undefined)
+   expect(product.isQuantityRestricted).toEqual(body2.isQuantityRestricted)
 });
 
 
@@ -173,25 +158,27 @@ it('PUT:/api/product --> Wrong Author', async () => {
    const body1 = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
-   const response  = await request(app)
+   await request(app)
       .post('/api/product')
       .set('Authorization', global.signin())
       .send(body1)
       .expect(200);
-
-   console.log(response.body)
 
    let data = await Product.find({})
 
    const body2 = {
       price: 200,
       description,
+      quantity: 100,
       title: 'updated title',
       productId: data[0]._id,
+      isQuantityRestricted: true,
       placeholder: 'updated placeholder',
    };
 

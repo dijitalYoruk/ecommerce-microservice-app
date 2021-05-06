@@ -4,9 +4,11 @@ import mongoose from 'mongoose';
 import Order from '../../models/Order';
 import Product from '../../models/Product';
 
-const description = 'new description new description new description new description \
-                     new description new description new description new description';
-
+const description = 'new description new description \
+                     new description new description \
+                     new description new description \
+                     new description new description';
+                     
 it('GET:/api/order/:orderId --> Unauthorized', async () => {
    const orderId = new mongoose.Types.ObjectId().toHexString();
    await request(app).get(`/api/order/${orderId}`).expect(401);   
@@ -25,23 +27,25 @@ it('GET:/api/order/:orderId --> Wrong Order', async () => {
 
 it('GET:/api/order/:orderId --> Retrieve Order.', async () => {
    const token = global.signin()
-   const authorId = mongoose.Types.ObjectId().toHexString()
 
    const product1 = Product.build({
-       authorId,
-       price: 500,
-       description,
-       title: 'product title 1',
-       placeholder: 'new placeholder 1'
-   });
+      price: 500,
+      description,
+      quantity: 100,
+      title: 'product title 1',
+      isQuantityRestricted: true,
+      placeholder: 'new placeholder 1',
+      authorId: mongoose.Types.ObjectId().toHexString()
+  });
 
    await product1.save();
+   const productQuantities = [10];
    const productIds = [product1.id]
 
    await request(app)
       .post('/api/order')
       .set('Authorization', token)
-      .send({productIds})
+      .send({productIds, productQuantities})
       .expect(200);    
 
    const data = await Order.find({})
@@ -51,27 +55,29 @@ it('GET:/api/order/:orderId --> Retrieve Order.', async () => {
    await request(app)
       .get(`/api/order/${order.id}`)
       .set('Authorization', token)
+      .expect(200)
 });
 
 
 it('GET:/api/order/:orderId --> Unauthorized Order Retrieval.', async () => {
-   const authorId = mongoose.Types.ObjectId().toHexString()
-
    const product1 = Product.build({
-       authorId,
-       price: 500,
-       description,
-       title: 'product title 1',
-       placeholder: 'new placeholder 1'
-   });
+      price: 500,
+      description,
+      quantity: 100,
+      title: 'product title 1',
+      isQuantityRestricted: true,
+      placeholder: 'new placeholder 1',
+      authorId: mongoose.Types.ObjectId().toHexString()
+  });
 
    await product1.save();
+   const productQuantities = [10];
    const productIds = [product1.id]
 
    await request(app)
       .post('/api/order')
       .set('Authorization', global.signin())
-      .send({productIds})
+      .send({productIds, productQuantities})
       .expect(200);    
 
    const data = await Order.find({})

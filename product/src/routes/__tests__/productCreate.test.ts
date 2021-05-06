@@ -14,7 +14,7 @@ const sendRequest = async (body: any, status: number) => {
       .post('/api/product')
       .set('Authorization', global.signin())
       .send(body)
-      .expect(status);    
+      expect(status);    
 }
 
 it('POST:/api/product --> Unauthorized', async () => {
@@ -24,57 +24,68 @@ it('POST:/api/product --> Unauthorized', async () => {
             .expect(401);
 });
 
-it('POST:/api/product --> Success', async () => {
+it('POST:/api/product --> Success with restricted quantity', async () => {
    const body = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
    await sendRequest(body, 200);
-   
    const data = await Product.find({})
    expect(data.length).toEqual(1)
+
    const product = data[0]
+   expect(client.publish).toHaveBeenCalled()
    expect(product.price).toEqual(body.price)
    expect(product.title).toEqual(body.title)
+   expect(product.quantity).toEqual(body.quantity)
    expect(product.placeholder).toEqual(body.placeholder)
    expect(product.description).toEqual(body.description)
-   expect(client.publish).toHaveBeenCalled()
+   expect(product.isQuantityRestricted).toEqual(body.isQuantityRestricted)
 });
 
+it('POST:/api/product --> Success with unrestricted quantity', async () => {
+   const body = {
+      price: 500,
+      description,
+      title: 'new title',
+      isQuantityRestricted: false,
+      placeholder: 'new placeholder',
+   };
+
+   await sendRequest(body, 200);
+   const data = await Product.find({})
+   expect(data.length).toEqual(1)
+
+   const product = data[0]
+   expect(client.publish).toHaveBeenCalled()
+   expect(product.price).toEqual(body.price)
+   expect(product.title).toEqual(body.title)
+   expect(product.quantity).toEqual(undefined)
+   expect(product.placeholder).toEqual(body.placeholder)
+   expect(product.description).toEqual(body.description)
+   expect(product.isQuantityRestricted).toEqual(body.isQuantityRestricted)
+});
 
 it('POST:/api/product --> Wrong and Missing Title', async () => {
    const body1 = {
       title: '',
       price: 500,
       description,
+      quantity: 100,
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
    const body2 = {
       price: 500,
       description,
-      placeholder: 'new placeholder',
-   };
-   
-   await sendRequest(body1, 400);
-   await sendRequest(body2, 400);
-});
-
-
-it('POST:/api/product --> Wrong and Missing Description', async () => {
-   const body1 = {
-      price: 500,
-      title: 'new title',
-      description: 'new Description',
-      placeholder: 'new placeholder',
-   };
-
-   const body2 = {
-      price: 500,
-      title: 'new title',
+      quantity: 100,
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
    
@@ -85,14 +96,18 @@ it('POST:/api/product --> Wrong and Missing Description', async () => {
 it('POST:/api/product --> Wrong and Missing Description', async () => {
    const body1 = {
       price: 500,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       description: 'new Description',
       placeholder: 'new placeholder',
    };
 
    const body2 = {
       price: 500,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
    
@@ -104,13 +119,17 @@ it('POST:/api/product --> Wrong and Missing Price', async () => {
    const body1 = {
       price: -500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
    const body2 = {
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
    
@@ -122,14 +141,41 @@ it('POST:/api/product --> Wrong and Missing Placeholder', async () => {
    const body1 = {
       price: -500,
       description,
-      title: 'new title',
+      quantity: 100,
       placeholder: '',
+      title: 'new title',
+      isQuantityRestricted: true,
    };
 
    const body2 = {
       price: 500,
       description,
+      quantity: 100,
+      placeholder: '',
       title: 'new title',
+      isQuantityRestricted: true,
+   };
+   
+   await sendRequest(body1, 400);
+   await sendRequest(body2, 400);
+});
+
+it('POST:/api/product --> Wrong and Missing Quantity', async () => {
+   const body1 = {
+      price: 500,
+      description,
+      quantity: -100,
+      placeholder: '',
+      title: 'new title',
+      isQuantityRestricted: true,
+   };
+
+   const body2 = {
+      price: 500,
+      description,
+      placeholder: '',
+      title: 'new title',
+      isQuantityRestricted: true,
    };
    
    await sendRequest(body1, 400);

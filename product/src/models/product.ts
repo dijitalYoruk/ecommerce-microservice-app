@@ -5,11 +5,13 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 // Attributes
 // =====================
 interface ProductAttributes {
-   price: number, 
    title: string, 
+   price: number, 
+   quantity?: number,
    authorId: string,
    description: string, 
    placeholder: string, 
+   isQuantityRestricted: boolean
 }
 
 // =====================
@@ -26,8 +28,10 @@ export interface ProductDoc extends mongoose.Document {
    price: number, 
    title: string, 
    authorId: string,
+   quantity?: number,
    description: string, 
    placeholder: string, 
+   isQuantityRestricted: boolean
 }
 
 // =====================
@@ -51,13 +55,24 @@ const ProductSchema = new Schema({
       type: String,
       required:  [true, 'Placeholder is missing']
    },
+   isQuantityRestricted: {
+      type: Boolean,
+      required:  [true, 'isQuantityRestricted is missing']
+   },
+   quantity: {
+      type: Number,
+      min: [0, 'Quantity needs to be at least zero.'],
+      required: [
+         function() { return this.get('isQuantityRestricted') }, 
+         'Quantity is required'
+      ]
+   },
    authorId: {
       type: String,
       required:  [true, 'Author is missing']
    }
 },{
    timestamps: true, 
-   versionKey: false,
    toJSON: {
       transform(doc, ret) {
          ret.id = ret._id;
@@ -74,6 +89,18 @@ ProductSchema.statics.build = (attr: ProductAttributes) => {
    return new Product(attr);
 }
 
+ProductSchema.pre('save', function(next) {
+   // check quantity restirctions
+   const isQuantityRestricted = this.get('isQuantityRestricted');
+   if (!isQuantityRestricted) this.set('quantity', undefined)
+   
+   // check version
+   const version = this.get('version');
+   if (!version) next()
+   this.set('version', version+1)
+})
+
 ProductSchema.plugin(mongoosePaginate)
+ProductSchema.set('versionKey', 'version')
 const Product = mongoose.model<ProductDoc, ProductModel>('Product', ProductSchema)
 export default Product

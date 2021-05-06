@@ -17,13 +17,14 @@ it('GET:/api/product/:id --> Unauthorized', async () => {
 });
 
 it('GET:/api/product/:id --> Success', async () => {
-
    const token = global.signin()
 
    const body1 = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 

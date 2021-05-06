@@ -5,6 +5,7 @@ import { validateRequest } from '@conqueror-ecommerce/common'
 export const validateCreateProduct = [
    
    body('title')
+      .trim()
       .notEmpty()
       .withMessage(__('validation_request', __('Title'))),
    
@@ -12,6 +13,14 @@ export const validateCreateProduct = [
       .trim()
       .isLength({ min: 50 })
       .withMessage(__('validation_min_length', __('description'), '50')),
+
+   body('isQuantityRestricted')
+      .isBoolean()
+      .withMessage('Please specify whether the product is quantity restricted.'),
+
+   body('quantity')
+      .custom((quantity, {req}) => (req.body.isQuantityRestricted && quantity > 0) || !req.body.isQuantityRestricted)
+      .withMessage('Please specify product quantity restricted.'),
 
    body('placeholder')
       .notEmpty()

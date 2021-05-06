@@ -19,8 +19,8 @@ import {
 // routes
 routerOrder.get('/', authenticated, retrieveOrders);
 routerOrder.delete('/:orderId', authenticated, deleteOrder);
-routerOrder.get('/:orderId', authenticated, retrieveOrder);
 routerOrder.get('/asAdmin', authenticated, retrieveOrdersAsAdmin);
+routerOrder.get('/:orderId', authenticated, retrieveOrder);
 routerOrder.post('/', authenticated, validateCreateOrder, createOrder);
 
 export default routerOrder;

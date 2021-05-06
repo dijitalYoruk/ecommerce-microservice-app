@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import Product from '../../models/product';
+import { client } from '../../services/NatsService'
 
 const description = 'new description new description \
                      new description new description \
@@ -15,13 +16,14 @@ it('DELETE:/api/product --> Unauthorized', async () => {
 });
 
 it('DELETE:/api/product --> Success', async () => {
-
    const token = global.signin()
 
    const body1 = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 
@@ -45,6 +47,7 @@ it('DELETE:/api/product --> Success', async () => {
 
    data = await Product.find({})
    expect(data.length).toEqual(0)
+   expect(client.publish).toHaveBeenCalled()
 });
 
 it('DELETE:/api/product --> Wrong Author', async () => {
@@ -52,7 +55,9 @@ it('DELETE:/api/product --> Wrong Author', async () => {
    const body1 = {
       price: 500,
       description,
+      quantity: 100,
       title: 'new title',
+      isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
 

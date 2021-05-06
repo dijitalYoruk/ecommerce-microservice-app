@@ -7,9 +7,11 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 interface ProductAttributes {
    price: number, 
    title: string, 
+   quantity: number,
    authorId: string,
    description: string, 
    placeholder: string, 
+   isQuantityRestricted: boolean
 }
 
 // =====================
@@ -23,11 +25,14 @@ interface ProductModel extends mongoose.PaginateModel<ProductDoc> {
 // Product Document
 // =====================
 export interface ProductDoc extends mongoose.Document {
+   id: string,
    price: number, 
    title: string, 
+   quantity: number,
    authorId: string,
    description: string, 
    placeholder: string, 
+   isQuantityRestricted: boolean
 }
 
 // =====================
@@ -39,17 +44,21 @@ const ProductSchema = new Schema({
       required: [true, 'Title is missing'],
       trim: true
    },  
-   description: {
-      type: String,
-      required:  [true, 'Description is missing'],
-   },
    price: {
       type: Number,
       required:  [true, 'Price is missing']
    },
-   placeholder: {
-      type: String,
-      required:  [true, 'Placeholder is missing']
+   isQuantityRestricted: {
+      type: Boolean,
+      required:  [true, 'isQuantityRestricted is missing']
+   },
+   quantity: {
+      type: Number,
+      min: [0, 'Quantity needs to be at least zero.'],
+      required: [
+         function() { return this.get('isQuantityRestricted') }, 
+         'Quantity is required'
+      ]
    },
    authorId: {
       type: String,
