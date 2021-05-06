@@ -18,5 +18,6 @@ export * from './events/BasePublisher';
 export * from './events/EventOrderCreated';
 export * from './events/EventProductCreated';
 export * from './events/EventProductUpdated';
+export * from './events/EventProductDeleted';
 export * from './events/EventOrderCancelled';
 
