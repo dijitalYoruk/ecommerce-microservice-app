@@ -7,6 +7,7 @@ export interface EventProductCreated {
       title: string,
       price: number,
       quantity?: number,
+      placeholder:string;
       isQuantityRestricted: boolean
    }
 }

@@ -6,7 +6,9 @@ export interface EventProductUpdated {
       id: string,
       title: string,
       price: number,
+      version: number, 
       quantity?: number,
+      placeholder:string;
       isQuantityRestricted: boolean
    }
 }
