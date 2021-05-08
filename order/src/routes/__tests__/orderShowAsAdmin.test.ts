@@ -17,12 +17,11 @@ it('GET:/api/order/asAdmin --> Unauthorized', async () => {
 it('GET:/api/order/asAdmin --> Retrieve Orders As Admin.', async () => {
    const product1 = Product.build({
       price: 500,
-      description,
       quantity: 100,
       title: 'product title 1',
       isQuantityRestricted: true,
       placeholder: 'new placeholder 1',
-      authorId: mongoose.Types.ObjectId().toHexString()
+      id: mongoose.Types.ObjectId().toHexString()
    });
 
    await product1.save();

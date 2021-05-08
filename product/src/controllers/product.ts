@@ -1,14 +1,14 @@
+// imports
 import { __ } from 'i18n';
 import Product from '../models/product';
 import { Request, Response } from 'express';
-import PublisherProductCreated from '../publishers/PublisherProductCreated';
-import PublisherProductUpdated from '../publishers/PublisherProductUpdated';
-import PublisherProductDeleted from '../publishers/PublisherProductDeleted';
+import PublisherProductCreated from '../events/publishers/PublisherProductCreated';
+import PublisherProductUpdated from '../events/publishers/PublisherProductUpdated';
+import PublisherProductDeleted from '../events/publishers/PublisherProductDeleted';
 import { RequestCreateProduct, RequestUpdateProduct } from '../request/product';
 import { BadRequestError, NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
 
 // methods
-
 
 /**
  * Creates the product and publishes an event.
@@ -20,8 +20,8 @@ export const createProduct = async (req: Request, res: Response) => {
    const product = Product.build({ ...body, authorId: req.currentUserJWT?.id! });
    await product.save();
 
-   const { id, title, price, isQuantityRestricted, quantity } = product;
-   await PublisherProductCreated.publish({ id, title, price, isQuantityRestricted, quantity })
+   const { id, title, placeholder, price, isQuantityRestricted, quantity } = product;
+   await PublisherProductCreated.publish({ id, title, placeholder, price, isQuantityRestricted, quantity })
 
    res.status(200).json({
       status: 200,
@@ -55,8 +55,8 @@ export const updateProduct = async (req: Request, res: Response) => {
    product.set(body)
    product = await product.save();
 
-   const { id, title, price, isQuantityRestricted, quantity } = product;
-   await PublisherProductUpdated.publish({ id, title, price, isQuantityRestricted, quantity })
+   const { id, title, placeholder, price, isQuantityRestricted, quantity, version } = product;
+   await PublisherProductUpdated.publish({ id, title, placeholder, price, isQuantityRestricted, quantity, version })
 
    res.status(200).json({
       status: 200,

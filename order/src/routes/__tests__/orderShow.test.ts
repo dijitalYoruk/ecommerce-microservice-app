@@ -30,12 +30,11 @@ it('GET:/api/order/:orderId --> Retrieve Order.', async () => {
 
    const product1 = Product.build({
       price: 500,
-      description,
       quantity: 100,
       title: 'product title 1',
       isQuantityRestricted: true,
       placeholder: 'new placeholder 1',
-      authorId: mongoose.Types.ObjectId().toHexString()
+      id: mongoose.Types.ObjectId().toHexString()
   });
 
    await product1.save();
@@ -62,12 +61,11 @@ it('GET:/api/order/:orderId --> Retrieve Order.', async () => {
 it('GET:/api/order/:orderId --> Unauthorized Order Retrieval.', async () => {
    const product1 = Product.build({
       price: 500,
-      description,
       quantity: 100,
       title: 'product title 1',
       isQuantityRestricted: true,
       placeholder: 'new placeholder 1',
-      authorId: mongoose.Types.ObjectId().toHexString()
+      id: mongoose.Types.ObjectId().toHexString()
   });
 
    await product1.save();

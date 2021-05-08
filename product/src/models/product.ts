@@ -25,8 +25,10 @@ interface ProductModel extends mongoose.PaginateModel<ProductDoc> {
 // Product Document
 // =====================
 export interface ProductDoc extends mongoose.Document {
+   id: string,
    price: number, 
    title: string, 
+   version: number,
    authorId: string,
    quantity?: number,
    description: string, 

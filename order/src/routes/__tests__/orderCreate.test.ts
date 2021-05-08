@@ -53,22 +53,20 @@ it('POST:/api/order --> Products not found', async () => {
 it('POST:/api/order --> Creates an order for multiple product.', async () => {
     const product1 = Product.build({
         price: 500,
-        description,
         quantity: 100,
         title: 'product title 1',
         isQuantityRestricted: true,
         placeholder: 'new placeholder 1',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     const product2 = Product.build({
         price: 500,
-        description,
         quantity: 50,
         title: 'product title 2',
         isQuantityRestricted: true,
         placeholder: 'new placeholder 2',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     await product1.save();
@@ -88,22 +86,20 @@ it('POST:/api/order --> Creates an order for multiple product.', async () => {
 it('POST:/api/order --> Quantity not enough', async () => {
     const product1 = Product.build({
         price: 500,
-        description,
         quantity: 1,
         title: 'product title 1',
         isQuantityRestricted: true,
         placeholder: 'new placeholder 1',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     const product2 = Product.build({
         price: 500,
-        description,
         quantity: 5,
         title: 'product title 2',
         isQuantityRestricted: true,
         placeholder: 'new placeholder 2',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     await product1.save();
@@ -121,22 +117,20 @@ it('POST:/api/order --> Quantity not enough', async () => {
 it('POST:/api/order --> No Quantity Restriction', async () => {
     const product1 = Product.build({
         price: 500,
-        description,
         quantity: 1,
         title: 'product title 1',
         isQuantityRestricted: false,
         placeholder: 'new placeholder 1',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     const product2 = Product.build({
         price: 500,
-        description,
         quantity: 5,
         title: 'product title 2',
         isQuantityRestricted: false,
         placeholder: 'new placeholder 2',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     await product1.save();
@@ -156,12 +150,11 @@ it('POST:/api/order --> No Quantity Restriction', async () => {
 it('POST:/api/order --> Creates an order for a single product.', async () => {    
     const product1 = Product.build({
         price: 500,
-        description,
         quantity: 100,
         title: 'product title 1',
         isQuantityRestricted: true,
         placeholder: 'new placeholder 1',
-        authorId: mongoose.Types.ObjectId().toHexString()
+        id: mongoose.Types.ObjectId().toHexString()
     });
 
     await product1.save();

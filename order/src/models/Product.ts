@@ -5,11 +5,10 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 // Attributes
 // =====================
 interface ProductAttributes {
+   id: string,
    price: number, 
    title: string, 
-   quantity: number,
-   authorId: string,
-   description: string, 
+   quantity?: number,
    placeholder: string, 
    isQuantityRestricted: boolean
 }
@@ -19,6 +18,7 @@ interface ProductAttributes {
 // =====================
 interface ProductModel extends mongoose.PaginateModel<ProductDoc> {
    build(attr: ProductAttributes): ProductDoc
+   findByEvent(data: { id: string, version: number }): ProductDoc
 }
 
 // =====================
@@ -28,9 +28,8 @@ export interface ProductDoc extends mongoose.Document {
    id: string,
    price: number, 
    title: string, 
+   version: number,
    quantity: number,
-   authorId: string,
-   description: string, 
    placeholder: string, 
    isQuantityRestricted: boolean
 }
@@ -48,6 +47,10 @@ const ProductSchema = new Schema({
       type: Number,
       required:  [true, 'Price is missing']
    },
+   placeholder: {
+      type: String,
+      required:  [true, 'Placeholder is missing']
+   },
    isQuantityRestricted: {
       type: Boolean,
       required:  [true, 'isQuantityRestricted is missing']
@@ -59,14 +62,9 @@ const ProductSchema = new Schema({
          function() { return this.get('isQuantityRestricted') }, 
          'Quantity is required'
       ]
-   },
-   authorId: {
-      type: String,
-      required:  [true, 'Author is missing']
    }
 },{
    timestamps: true, 
-   versionKey: false,
    toJSON: {
       transform(doc, ret) {
          ret.id = ret._id;
@@ -79,10 +77,22 @@ const ProductSchema = new Schema({
 // =====================
 // Hooks
 // ===================== 
+ProductSchema.pre('save', function(next) {
+   const version = this.get('version');
+   if (!version) next()
+   this.set('version', version+1)
+})
+
 ProductSchema.statics.build = (attr: ProductAttributes) => {
-   return new Product(attr);
+   return new Product({ _id: attr.id, ...attr});
+}
+
+ProductSchema.statics.findByEvent = async (data: { id: string, version: number }) => {
+   const { id, version } = data
+   return await Product.findOne({ _id: id, version: version-1 })
 }
 
 ProductSchema.plugin(mongoosePaginate)
+ProductSchema.set('versionKey', 'version')
 const Product = mongoose.model<ProductDoc, ProductModel>('Product', ProductSchema)
 export default Product

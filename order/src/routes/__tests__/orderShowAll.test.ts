@@ -14,12 +14,11 @@ it('GET:/api/order --> Unauthorized', async () => {
 it('GET:/api/order --> Retrieve Orders.', async () => {
    const product1 = Product.build({
       price: 500,
-      description,
       quantity: 100,
       title: 'product title 1',
       isQuantityRestricted: true,
       placeholder: 'new placeholder 1',
-      authorId: mongoose.Types.ObjectId().toHexString()
+      id: mongoose.Types.ObjectId().toHexString()
   });
 
    await product1.save();

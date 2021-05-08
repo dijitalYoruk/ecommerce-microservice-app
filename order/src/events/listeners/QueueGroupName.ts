@@ -1,0 +1,2 @@
+const QUEUE_GROUP_NAME = "ORDER"  
+export { QUEUE_GROUP_NAME } 

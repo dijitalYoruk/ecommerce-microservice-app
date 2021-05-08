@@ -1,4 +1,4 @@
-import { client } from '../services/NatsService'
+import { client } from '../../services/NatsService'
 import { NatsSubjects, BasePublisher, EventProductUpdated } from "@conqueror-ecommerce/common";
 
 class PublisherProductUpdated extends BasePublisher<EventProductUpdated> {

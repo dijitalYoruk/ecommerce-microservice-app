@@ -25,12 +25,11 @@ it('DELETE:/api/order/:orderId --> Order not found', async () => {
 it('DELETE:/api/order/:orderId --> Delete Order.', async () => {
    const product1 = Product.build({
       price: 500,
-      description,
       quantity: 100,
       title: 'product title 1',
       isQuantityRestricted: true,
       placeholder: 'new placeholder 1',
-      authorId: mongoose.Types.ObjectId().toHexString()
+      id: mongoose.Types.ObjectId().toHexString()
   });
 
    await product1.save();
@@ -57,12 +56,11 @@ it('DELETE:/api/order/:orderId --> Delete Order.', async () => {
 it('DELETE:/api/order/:orderId --> Unauthorized Order Retrieval.', async () => {
    const product1 = Product.build({
       price: 500,
-      description,
       quantity: 100,
       title: 'product title 1',
       isQuantityRestricted: true,
       placeholder: 'new placeholder 1',
-      authorId: mongoose.Types.ObjectId().toHexString()
+      id: mongoose.Types.ObjectId().toHexString()
   });
 
    await product1.save();
