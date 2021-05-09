@@ -1,7 +1,7 @@
 export enum OrderStatus {
    Expired = 'expired',
    Created = 'created',
-   Complete = 'complete',
+   Completed = 'completed',
    Cancelled = 'cancelled',
    AwaitingPayment = 'awaiting:payment',
 }
