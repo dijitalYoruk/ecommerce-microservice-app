@@ -34,6 +34,10 @@ export abstract class BaseListener<T extends Event> {
     }
 
    public listen() {
+      console.log(this.subject)
+      console.log(this.queueGroupName)
+      console.log('Subsribing to Subject:' + this.subject + ' with Queue Group:' + this.queueGroupName)
+
       const subscription = this.client.subscribe(
          this.subject, 
          this.queueGroupName, 
