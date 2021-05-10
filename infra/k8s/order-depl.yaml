@@ -22,7 +22,9 @@ spec:
           - name: EXPIRATION_WINDOW_MINUTES
             value: "5" 
           - name: MONGO_HOST
-            value: "mongodb://order-mongo-srv:27017/order"
+            value: "mongodb://order-mongo-srv:27017/order"          
+          - name: SERVER_PORT
+            value: "3000"
           - name: NATS_CLIENT_ID
             valueFrom:
               fieldRef:

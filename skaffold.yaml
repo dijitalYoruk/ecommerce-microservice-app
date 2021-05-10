@@ -38,5 +38,13 @@ build:
         dockerfile: Dockerfile
       sync:
         infer: 
+          - '**/*' 
+
+    - image: fatihsevban/ecommerce-expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        infer: 
           - '**/*'
         

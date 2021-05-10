@@ -1,4 +1,5 @@
-import ListenerOrderCreated from '../ListenerOrderCreated';
+import { client } from '../../../services/NatsService';
+import { ListenerOrderCreated } from '../ListenerOrderCreated';
 import { expirationQueue } from '../../../queues/OrderExpirationQueue';
 import { EventOrderCreated, OrderStatus } from '@conqueror-ecommerce/common';
 
@@ -24,7 +25,7 @@ it('ListenerOrderCreated', async () => {
     const message: Message = { ack: jest.fn() }
 
     // check listener
-    await ListenerOrderCreated.onMessage(eventData, message)
+    await new ListenerOrderCreated(client).onMessage(eventData, message)
     expect(message.ack).toHaveBeenCalled()
 
     // check event publishment

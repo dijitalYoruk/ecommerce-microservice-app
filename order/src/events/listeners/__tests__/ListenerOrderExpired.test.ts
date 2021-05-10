@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Order from '../../../models/Order';
 import Product from '../../../models/Product';
 import { client } from '../../../services/NatsService';
-import ListenerOrderExpired from '../ListenerOrderExpired';
+import { ListenerOrderExpired } from '../ListenerOrderExpired';
 import { OrderStatus, EventOrderExpired } from '@conqueror-ecommerce/common';
 
 it('ListenerProductExpired', async () => {
@@ -38,7 +38,7 @@ it('ListenerProductExpired', async () => {
     const message: Message = { ack: jest.fn() }
 
     // check listener
-    await ListenerOrderExpired.onMessage(eventData, message)
+    await new ListenerOrderExpired(client).onMessage(eventData, message)
     expect(message.ack).toHaveBeenCalled()
 
     // retrieve updated order

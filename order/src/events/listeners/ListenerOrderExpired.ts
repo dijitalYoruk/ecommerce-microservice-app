@@ -1,10 +1,8 @@
-import Product from '../../models/Product'
-import { Message } from 'node-nats-streaming'
-import { client } from '../../services/NatsService'
-import { QUEUE_GROUP_NAME } from './QueueGroupName'
-import { NatsSubjects, BaseListener, EventOrderExpired, OrderStatus } from '@conqueror-ecommerce/common'
 import Order from '../../models/Order'
+import { Message } from 'node-nats-streaming'
+import { QUEUE_GROUP_NAME } from './QueueGroupName'
 import PublisherOrderCancelled from '../publishers/PublisherOrderCancelled'
+import { NatsSubjects, BaseListener, EventOrderExpired, OrderStatus } from '@conqueror-ecommerce/common'
 
 
 export class ListenerOrderExpired extends BaseListener<EventOrderExpired> {
@@ -19,7 +17,7 @@ export class ListenerOrderExpired extends BaseListener<EventOrderExpired> {
             throw new Error('Order not Found.');
         }
 
-        if ([OrderStatus.Complete, OrderStatus.Cancelled].includes(order.status)) {
+        if ([OrderStatus.Completed, OrderStatus.Cancelled].includes(order.status)) {
             msg.ack()
         }
 
@@ -46,6 +44,3 @@ export class ListenerOrderExpired extends BaseListener<EventOrderExpired> {
         msg.ack()
     }
 }
-
-
-export default new ListenerOrderExpired(client)

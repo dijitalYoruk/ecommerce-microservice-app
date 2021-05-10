@@ -96,7 +96,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
       throw new NotAuthorizedError('Authorization Error');
    }
 
-   if (order.status === OrderStatus.Complete) {
+   if (order.status === OrderStatus.Completed) {
       throw new BadRequestError(__('error_already_complete', __('Order')))
    }
 
@@ -177,8 +177,8 @@ export const retrieveOrdersAsAdmin = async (req: Request, res: Response) => {
       case OrderStatus.Created:
          orderStatus = OrderStatus.Created;
          break;
-      case OrderStatus.Complete:
-         orderStatus = OrderStatus.Complete;
+      case OrderStatus.Completed:
+         orderStatus = OrderStatus.Completed;
          break;
       default:
          orderStatus = OrderStatus.AwaitingPayment;

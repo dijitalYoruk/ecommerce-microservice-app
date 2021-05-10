@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Product from '../../../models/product';
 import { client } from '../../../services/NatsService';
-import ListenerOrderCreated from '../ListenerOrderCreated';
+import { ListenerOrderCreated } from '../ListenerOrderCreated';
 import { EventOrderCreated, OrderStatus } from '@conqueror-ecommerce/common';
 
 const description = 'new description new description \
@@ -64,7 +64,7 @@ it('ListenerOrderCreated', async () => {
     const message: Message = { ack: jest.fn() }
 
     // check listener
-    await ListenerOrderCreated.onMessage(eventData, message)
+    await new ListenerOrderCreated(client).onMessage(eventData, message)
     expect(message.ack).toHaveBeenCalled()
 
     // retrieve updated products

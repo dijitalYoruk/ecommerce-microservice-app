@@ -1,5 +1,4 @@
 import { Message } from 'node-nats-streaming'
-import { client } from '../../services/NatsService'
 import { QUEUE_GROUP_NAME } from './QueueGroupName'
 import Product, { ProductDoc } from '../../models/product'
 import PublisherProductUpdated from '../publishers/PublisherProductUpdated'
@@ -35,5 +34,3 @@ export class ListenerOrderCancelled extends BaseListener<EventOrderCancelled> {
         msg.ack()
     }
 }
-
-export default new ListenerOrderCancelled(client)

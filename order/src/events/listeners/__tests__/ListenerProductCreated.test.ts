@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import Product from '../../../models/Product';
-import ListenerProductCreated from '../ListenerProductCreated';
+import { client } from '../../../services/NatsService';
 import { EventProductCreated } from '@conqueror-ecommerce/common';
+import { ListenerProductCreated } from '../ListenerProductCreated';
 
 it('ListenerProductCreated', async () => {
     // build event data
@@ -18,7 +19,7 @@ it('ListenerProductCreated', async () => {
     const message: Message = { ack: jest.fn() }
 
     // check listener
-    await ListenerProductCreated.onMessage(eventData, message)
+    await new ListenerProductCreated(client).onMessage(eventData, message)
     expect(message.ack).toHaveBeenCalled()
 
     // retrieve updated products

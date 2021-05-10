@@ -1,6 +1,5 @@
 import Product from '../../models/Product'
 import { Message } from 'node-nats-streaming'
-import { client } from '../../services/NatsService'
 import { QUEUE_GROUP_NAME } from './QueueGroupName'
 import { NatsSubjects, BaseListener, EventProductUpdated } from '@conqueror-ecommerce/common'
 
@@ -23,6 +22,3 @@ export class ListenerProductUpdated extends BaseListener<EventProductUpdated> {
         msg.ack()
     }
 }
-
-
-export default new ListenerProductUpdated(client)

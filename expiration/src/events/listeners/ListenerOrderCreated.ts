@@ -1,8 +1,7 @@
 import { Message } from 'node-nats-streaming'
-import { client } from '../../services/NatsService'
 import { QUEUE_GROUP_NAME } from './QueueGroupName'
-import { NatsSubjects, BaseListener, EventOrderCreated } from '@conqueror-ecommerce/common'
 import { expirationQueue } from '../../queues/OrderExpirationQueue'
+import { NatsSubjects, BaseListener, EventOrderCreated } from '@conqueror-ecommerce/common'
 
 
 export class ListenerOrderCreated extends BaseListener<EventOrderCreated> {
@@ -16,6 +15,3 @@ export class ListenerOrderCreated extends BaseListener<EventOrderCreated> {
         msg.ack()
     }
 }
-
-
-export default new ListenerOrderCreated(client)
