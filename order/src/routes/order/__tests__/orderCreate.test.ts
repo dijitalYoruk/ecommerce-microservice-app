@@ -1,14 +1,9 @@
-import request from 'supertest';
-import { app } from '../../app';
 import mongoose from 'mongoose';
-import Order from '../../models/Order';
-import Product from '../../models/Product';
-import { client } from '../../services/NatsService';
-
-const description = 'new description new description \
-                     new description new description \
-                     new description new description \
-                     new description new description';
+import request from 'supertest';
+import { app } from '../../../app';
+import Order from '../../../models/Order';
+import Product from '../../../models/Product';
+import { client } from '../../../services/NatsService';
 
 const sendRequest = async (body: any, status: number) => {
     await request(app)

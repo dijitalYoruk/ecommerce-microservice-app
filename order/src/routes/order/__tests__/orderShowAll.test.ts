@@ -1,11 +1,9 @@
-import { app } from '../../app';
-import request from 'supertest';
 import mongoose from 'mongoose';
-import Order from '../../models/Order';
-import Product from '../../models/Product';
+import request from 'supertest';
+import { app } from '../../../app';
+import Order from '../../../models/Order';
+import Product from '../../../models/Product';
 
-const description = 'new description new description new description new description \
-                     new description new description new description new description';
 
 it('GET:/api/order --> Unauthorized', async () => {
    await request(app).get(`/api/order`).expect(401);   

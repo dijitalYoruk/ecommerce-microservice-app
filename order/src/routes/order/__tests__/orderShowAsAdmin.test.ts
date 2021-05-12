@@ -1,14 +1,10 @@
-import { app } from '../../app';
-import request from 'supertest';
 import mongoose from 'mongoose';
-import Order from '../../models/Order';
-import Product from '../../models/Product';
+import request from 'supertest';
+import { app } from '../../../app';
+import Order from '../../../models/Order';
+import Product from '../../../models/Product';
 import { OrderStatus } from '@conqueror-ecommerce/common';
 
-const description = 'new description new description \
-                     new description new description \
-                     new description new description \
-                     new description new description';
 
 it('GET:/api/order/asAdmin --> Unauthorized', async () => {
    await request(app).get(`/api/order`).expect(401);
@@ -52,9 +48,10 @@ it('GET:/api/order/asAdmin --> Retrieve Orders As Admin.', async () => {
 
    const { body } = await request(app)
       .get(`/api/order/asAdmin`)
+      .set('Authorization', global.signin())
       .query({ status: OrderStatus.Created })
       .set('Authorization', token)
-      .expect(200);
+      .expect(200)
 
    expect(body.data.orders.docs.length).toEqual(3)
 });
