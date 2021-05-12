@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { app } from '../../app';
-import Product from '../../models/Product';
-import { client } from '../../services/NatsService'
+import { app } from '../../../app';
+import Product from '../../../models/Product';
+import { client } from '../../../services/NatsService'
 
 const description = 'new description new description \
                      new description new description \
@@ -10,7 +10,7 @@ const description = 'new description new description \
 
 it('DELETE:/api/product --> Unauthorized', async () => {
    await request(app)
-      .delete('/api/product')
+      .delete('/api/product/sadsadsadsa')
       .send({})
       .expect(401);   
 });
@@ -34,15 +34,11 @@ it('DELETE:/api/product --> Success', async () => {
       .expect(200);
 
    let data = await Product.find({})
-
-   const body2 = {
-      productId: data[0]._id,
-   };
+   const productId = data[0]._id
 
    await request(app)
-      .delete(`/api/product`)
+      .delete(`/api/product/${productId}`)
       .set('Authorization', token)
-      .send(body2)
       .expect(200);
 
    data = await Product.find({})
@@ -68,15 +64,11 @@ it('DELETE:/api/product --> Wrong Author', async () => {
       .expect(200);
 
    let data = await Product.find({})
-
-   const body2 = {
-      productId: data[0]._id,
-   };
+   const productId = data[0]._id
 
    await request(app)
-      .delete(`/api/product`)
+      .delete(`/api/product/${productId}`)
       .set('Authorization', global.signin())
-      .send(body2)
       .expect(401);
 });
 
@@ -85,5 +77,5 @@ it('DELETE:/api/product --> Missing ProductId', async () => {
       .delete(`/api/product`)
       .set('Authorization', global.signin())
       .send({})
-      .expect(400);
+      .expect(404);
 });

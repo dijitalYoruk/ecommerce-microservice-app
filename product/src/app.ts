@@ -11,8 +11,18 @@ app.use(json());
 app.use(i18n.init);
 
 // routes
-import routesProduct from './routes/product';
-app.use('/api/product', routesProduct);
+const PREFIX_URL_PRODUCT = '/api/product'
+import routeProductShow from './routes/product/productShow';
+import routeProductCreate from './routes/product/productCreate';
+import routeProductUpdate from './routes/product/productUpdate';
+import routeProductDelete from './routes/product/productDelete';
+import routeProductShowAll from './routes/product/productShowAll';
+
+app.use(PREFIX_URL_PRODUCT, routeProductShow);
+app.use(PREFIX_URL_PRODUCT, routeProductUpdate);
+app.use(PREFIX_URL_PRODUCT, routeProductCreate);
+app.use(PREFIX_URL_PRODUCT, routeProductDelete);
+app.use(PREFIX_URL_PRODUCT, routeProductShowAll);
 
 app.all('*',  () => {
    throw new NotFoundError();

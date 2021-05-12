@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { app } from '../../app';
-import Product from '../../models/Product';
-import { client } from '../../services/NatsService';
+import { app } from '../../../app';
+import Product from '../../../models/Product';
+import { client } from '../../../services/NatsService';
 
 const description = 'new description new description \
                      new description new description \

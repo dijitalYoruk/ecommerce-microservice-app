@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-jest.mock('./services/NatsService', () => jest.requireActual('./__mocks__/NatsService'))
+jest.mock('../services/NatsService', () => jest.requireActual('../__mocks__/NatsService'))
 
 declare global {
    namespace NodeJS {
