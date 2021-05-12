@@ -2,7 +2,7 @@ import { app } from './app';
 import keys from './util/keys';
 
 // Mongo Config
-import './services/mongo';
+import './services/Mongo';
 
 // Exception Catcher
 process.on('uncaughtException', err => {

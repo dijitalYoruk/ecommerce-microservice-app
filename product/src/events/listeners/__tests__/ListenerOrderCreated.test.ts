@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Product from '../../../models/product';
+import Product from '../../../models/Product';
 import { client } from '../../../services/NatsService';
 import { ListenerOrderCreated } from '../ListenerOrderCreated';
 import { EventOrderCreated, OrderStatus } from '@conqueror-ecommerce/common';

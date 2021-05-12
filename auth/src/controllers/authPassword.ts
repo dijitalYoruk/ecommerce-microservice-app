@@ -3,14 +3,14 @@ import JWT from '../util/jwt';
 import keys from '../util/keys';
 import Password from '../util/password';
 import { Request, Response } from 'express';
-import Email from '../services/emailService';
+import Email from '../services/EmailService';
 import { generateToken } from '../util/util';
 import { RequestSignUp, RequestSignIn } from '../requests/auth';
 import { BadRequestError, NotAuthorizedError } from '@conqueror-ecommerce/common';
 
 // model
 import { __ } from 'i18n';
-import User from '../models/user';
+import User from '../models/User';
 
 // methods
 const signUp = async (req: Request, res: Response) => {

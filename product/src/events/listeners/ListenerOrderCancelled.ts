@@ -1,6 +1,6 @@
 import { Message } from 'node-nats-streaming'
 import { QUEUE_GROUP_NAME } from './QueueGroupName'
-import Product, { ProductDoc } from '../../models/product'
+import Product, { ProductDoc } from '../../models/Product'
 import PublisherProductUpdated from '../publishers/PublisherProductUpdated'
 import { NatsSubjects, BaseListener, EventOrderCancelled } from '@conqueror-ecommerce/common'
 

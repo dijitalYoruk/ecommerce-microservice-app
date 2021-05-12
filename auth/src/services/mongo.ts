@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 // ============================
 // SETUP SCHEMAS
 // ============================
-import '../models/user';
+import '../models/User';
 
 // ============================
 // DATABASE CONNECTION

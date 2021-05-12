@@ -3,11 +3,11 @@ import JWT from '../util/jwt';
 import keys from '../util/keys';
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
-import Email from '../services/emailService';
-import GithubAuth from '../services/githubAuth';
+import Email from '../services/EmailService';
+import GithubAuth from '../services/GithubAuth';
 
 // model
-import User from '../models/user' 
+import User from '../models/User' 
 
 // methods
 

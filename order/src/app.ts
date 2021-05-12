@@ -1,7 +1,7 @@
 // imports
 import cors from 'cors';
 import 'express-async-errors';
-import i18n from './util/localization';
+import i18n from './services/Localization';
 import express, { json } from 'express';
 import {NotFoundError, errorHandler} from '@conqueror-ecommerce/common';
 

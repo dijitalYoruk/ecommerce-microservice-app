@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import User from '../../models/user'
+import User from '../../models/User'
 
 it('POST:/api/auth/resetPassword --> Success', async () => {
    const body1 = {

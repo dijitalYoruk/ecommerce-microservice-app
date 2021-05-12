@@ -1,7 +1,7 @@
 import { app } from './app';
 import Keys from './util/keys';
 
-import './services/mongo'; // Mongo Config
+import './services/Mongo'; // Mongo Config
 import './services/NatsService'; // NATS Config
 
 // Exception Catcher

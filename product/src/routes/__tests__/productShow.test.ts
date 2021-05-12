@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
-import Product from '../../models/product';
+import Product from '../../models/Product';
 
 const description = 'new description new description \
                      new description new description \

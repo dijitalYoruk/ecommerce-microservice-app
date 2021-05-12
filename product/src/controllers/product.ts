@@ -1,6 +1,6 @@
 // imports
 import { __ } from 'i18n';
-import Product from '../models/product';
+import Product from '../models/Product';
 import { Request, Response } from 'express';
 import PublisherProductCreated from '../events/publishers/PublisherProductCreated';
 import PublisherProductUpdated from '../events/publishers/PublisherProductUpdated';

@@ -2,7 +2,7 @@
 import cors from 'cors';
 import 'express-async-errors';
 import express, { json } from 'express';
-import i18n from './services/localization'
+import i18n from './services/Localization'
 import {NotFoundError, errorHandler} from '@conqueror-ecommerce/common';
 
 const app = express();

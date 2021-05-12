@@ -3,11 +3,11 @@ import JWT from '../util/jwt'
 import keys from '../util/keys';
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
-import Email from '../services/emailService';
-import FacebookAuth from '../services/facebookAuth';
+import Email from '../services/EmailService';
+import FacebookAuth from '../services/FacebookAuth';
 
 // model
-import User from '../models/user' 
+import User from '../models/User' 
 
 // methods
 
