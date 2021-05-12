@@ -10,20 +10,55 @@ app.use(cors());
 app.use(json());
 app.use(i18n.init);
 
-// routes
-import routesAuthGoogle from './routes/authGoogle';
-import routesAuthGithub from './routes/authGithub';
-import routesAuthFacebook from './routes/authFacebook';
-import routesAuthPassword from './routes/authPassword';
+// =========================================
+// ORDINARY AUTH ROUTES
+// =========================================
+const PREFIX_URL_AUTH = '/api/auth'
+import routeAuthSignIn from './routes/authPassword/signIn';
+import routeAuthSignUp from './routes/authPassword/signUp';
+import routeAuthVerifyUser from './routes/authPassword/verifyUser';
+import routeAuthResetPassword from './routes/authPassword/resetPassword';
+import routeAuthForgotPassword from './routes/authPassword/forgotPassword';
+import routeAuthResendVerification from './routes/authPassword/resendVerification';
+import routeAuthRetrieveCurrentUser from './routes/authPassword/retrieveCurrentUser';
+app.use(PREFIX_URL_AUTH, routeAuthSignIn);
+app.use(PREFIX_URL_AUTH, routeAuthSignUp);
+app.use(PREFIX_URL_AUTH, routeAuthVerifyUser);
+app.use(PREFIX_URL_AUTH, routeAuthResetPassword);
+app.use(PREFIX_URL_AUTH, routeAuthForgotPassword);
+app.use(PREFIX_URL_AUTH, routeAuthResendVerification);
+app.use(PREFIX_URL_AUTH, routeAuthRetrieveCurrentUser);
 
-app.use('/api/auth/github', routesAuthGithub);
-app.use('/api/auth/google', routesAuthGoogle);
-app.use('/api/auth/facebook', routesAuthFacebook);
-app.use('/api/auth', routesAuthPassword);
 
-app.all('*', () => {
-   throw new NotFoundError();
-});
+// =========================================
+// GOOGLE AUTH ROUTES
+// =========================================
+const PREFIX_URL_AUTH_GOOGLE = '/api/auth/google'
+import routesAuthGoogleSignIn from './routes/authGoogle/signInViaGoogle';
+import routesAuthGoogleRetrieveURL from './routes/authGoogle/retrieveGoogleURL'
+app.use(PREFIX_URL_AUTH_GOOGLE, routesAuthGoogleSignIn);
+app.use(PREFIX_URL_AUTH_GOOGLE, routesAuthGoogleRetrieveURL);
 
+
+// =========================================
+// GITHUB AUTH ROUTES
+// =========================================
+const PREFIX_URL_AUTH_GITHUB = '/api/auth/github'
+import routesAuthGithubSignIn from './routes/authGithub/signInViaGitHub';
+import routesAuthGithubRetrieveURL from './routes/authGithub/retrieveGitubURL'
+app.use(PREFIX_URL_AUTH_GITHUB, routesAuthGithubSignIn);
+app.use(PREFIX_URL_AUTH_GITHUB, routesAuthGithubRetrieveURL);
+
+// =========================================
+// FACEBOOK AUTH ROUTES
+// =========================================
+const PREFIX_URL_AUTH_FACEBOOK = '/api/auth/facebook'
+import routesAuthFacebookSignIn from './routes/authFacebook/signInViaFacebook';
+import routesAuthFacebookRetrieveURL from './routes/authFacebook/retrieveFacebookURL';
+app.use(PREFIX_URL_AUTH_FACEBOOK, routesAuthFacebookSignIn);
+app.use(PREFIX_URL_AUTH_FACEBOOK, routesAuthFacebookRetrieveURL);
+
+
+app.all('*', () => { throw new NotFoundError(); });
 app.use(errorHandler);
 export { app }

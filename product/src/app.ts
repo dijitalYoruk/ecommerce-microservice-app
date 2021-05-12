@@ -10,7 +10,9 @@ app.use(cors());
 app.use(json());
 app.use(i18n.init);
 
-// routes
+// =========================================
+// ORDER ROUTES
+// =========================================
 const PREFIX_URL_PRODUCT = '/api/product'
 import routeProductShow from './routes/product/productShow';
 import routeProductCreate from './routes/product/productCreate';

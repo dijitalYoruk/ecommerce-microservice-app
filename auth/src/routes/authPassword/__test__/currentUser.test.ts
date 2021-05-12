@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { app } from '../../app';
-import User from '../../models/User'
+import { app } from '../../../app';
+import User from '../../../models/User'
 
 const registerAndSignIn = async() => {
    const body1 = {

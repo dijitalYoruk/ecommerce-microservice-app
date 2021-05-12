@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../app';
+import { app } from '../../../app';
 
 const sendRequest = async (creds, expectedStatus: number) => {
    return await request(app).post('/api/auth/signUp').send(creds).expect(expectedStatus);
