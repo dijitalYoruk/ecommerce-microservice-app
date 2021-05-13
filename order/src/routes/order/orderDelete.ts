@@ -36,7 +36,7 @@ const deleteOrder = async (req: Request, res: Response) => {
 
    const products = order.products.map(orderProduct => {
       return {
-         id: orderProduct.product.id,
+         id: orderProduct.product as string,
          quantity: orderProduct.quantity,
          unitSellPrice: orderProduct.unitSellPrice
       }

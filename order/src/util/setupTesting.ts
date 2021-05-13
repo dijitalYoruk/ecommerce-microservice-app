@@ -8,6 +8,7 @@ declare global {
    namespace NodeJS {
       interface Global {
          signin(): string;
+         signinCustom(payload: { username: string, email: string, id: string}): string;
       }
    }
 }
@@ -45,6 +46,13 @@ global.signin = () => {
       id: new mongoose.Types.ObjectId().toHexString(),
    };
 
+   // Create the JWT!
+   const token = jwt.sign(payload, process.env.JWT_SECRET!);
+   return `Bearer ${token}`;
+};
+
+
+global.signinCustom = (payload: { username: string, email: string, id: string}) => {
    // Create the JWT!
    const token = jwt.sign(payload, process.env.JWT_SECRET!);
    return `Bearer ${token}`;

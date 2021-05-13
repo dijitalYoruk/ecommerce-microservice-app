@@ -1,4 +1,5 @@
 export default {
+   STRIPE_KEY: process.env.STRIPE_KEY,
    MONGO_HOST: process.env.MONGO_HOST,
    SERVER_PORT: process.env.SERVER_PORT,
    JWT_SECRET: process.env.JWT_SECRET,

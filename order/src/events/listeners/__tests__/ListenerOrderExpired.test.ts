@@ -23,8 +23,8 @@ it('ListenerProductExpired', async () => {
         customer: mongoose.Types.ObjectId().toHexString(),
         status: OrderStatus.Created,
         products: [{
-            product,
             quantity: 2, 
+            product: product.id,
             unitSellPrice: product.price
         }]
     })

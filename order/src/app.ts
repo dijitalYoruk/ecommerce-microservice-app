@@ -28,9 +28,15 @@ app.use(PREFIX_URL_ORDER, routeOrderCreate);
 app.use(PREFIX_URL_ORDER, routeOrderDelete);
 app.use(PREFIX_URL_ORDER, routeOrderShow);
 
-app.all('*', () => {
-   throw new NotFoundError();
-});
 
+// =========================================
+// PAYMENT ROUTES
+// =========================================
+const PREFIX_URL_PAYMENT = '/api/payment'
+import routePaymentCreate from './routes/payment/paymentCreate';
+app.use(PREFIX_URL_PAYMENT, routePaymentCreate);
+
+
+app.all('*', () => { throw new NotFoundError(); });
 app.use(errorHandler);
 export { app }

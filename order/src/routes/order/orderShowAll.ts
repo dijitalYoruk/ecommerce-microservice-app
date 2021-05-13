@@ -15,7 +15,7 @@ import Order from '../../models/Order';
  */
 export const showAllOrders = async (req: Request, res: Response) => {
     const customer = req.currentUserJWT?.id;
-    const orders = await Order.find({ customer }).populate('products');
+    const orders = await Order.find({ customer }).populate('products.product');
 
     res.status(200).json({
         status: 200,

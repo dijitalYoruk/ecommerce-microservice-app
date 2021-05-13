@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { OrderStatus } from '@conqueror-ecommerce/common';
 import { ProductDoc } from './Product';
+import { PaymentDoc } from './Payment';
 
 // =====================
 // Attributes
@@ -13,7 +14,7 @@ interface OrderAttributes {
    status: OrderStatus;
    products: { 
       quantity: number,
-      product: ProductDoc,
+      product: string,
       unitSellPrice: number 
    }[];
 }
@@ -34,9 +35,10 @@ export interface OrderDoc extends mongoose.Document {
    expiresAt: Date;
    customer: string;
    status: OrderStatus;
+   payment?: string | PaymentDoc,
    products: {
       quantity: number,
-      product: ProductDoc,
+      product: string | ProductDoc,
       unitSellPrice: number,
    }[];
 }
@@ -54,6 +56,14 @@ const OrderSchema = new Schema({
       required: [true, 'Order status is missing'],
       enum: Object.values(OrderStatus),
       default: OrderStatus.Created,
+   },
+   payment: {
+      type: Schema.Types.ObjectId,
+      ref: 'Payment',
+      required: [
+         function() { return this.get('status') === OrderStatus.Completed }, 
+         'Payment is required.'
+      ]
    },
    products: [{
       product: {
@@ -84,6 +94,10 @@ const OrderSchema = new Schema({
    }
 })
 
+
+// =====================
+// Methods
+// =====================
 OrderSchema.statics.build = (attr: OrderAttributes) => {
    return new Order(attr);
 }

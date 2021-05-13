@@ -40,11 +40,6 @@ const validateCreateOrder = [
 
 // method
 
-/**
- * Creates the order and publishes event.
- * @param req is the Request Object
- * @param res is the Response Object
- */
 const createOrder = async (req: Request, res: Response) => {
     const { productIds, productQuantities } = req.body as RequestCreateOrder;
 
@@ -65,7 +60,7 @@ const createOrder = async (req: Request, res: Response) => {
         const productId = productIds[i];
         const quantity = productQuantities[i];
         const product = products.find(product => product.id === productId)!;
-        orderProducts.push({ product, unitSellPrice: product!.price, quantity });
+        orderProducts.push({ product: productId, unitSellPrice: product!.price, quantity });
         // is quantity enough
         if (product.isQuantityRestricted && product.quantity < quantity) {
             throw new BadRequestError('Product is not available anymore.')
@@ -85,7 +80,7 @@ const createOrder = async (req: Request, res: Response) => {
     // publish event
     orderProducts = orderProducts.map(orderProduct => {
         return {
-            id: orderProduct.product.id,
+            id: orderProduct.product,
             quantity: orderProduct.quantity,
             unitSellPrice: orderProduct.unitSellPrice
         }
