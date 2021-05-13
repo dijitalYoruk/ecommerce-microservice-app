@@ -22,7 +22,7 @@ it('GET:/api/order --> Retrieve Orders.', async () => {
    await product1.save();
    const productQuantities = [10];
    const productIds = [product1.id];
-   const token = global.signin();
+   const token = global.signinAsCustomer();
 
    await request(app)
       .post('/api/order')
@@ -38,7 +38,7 @@ it('GET:/api/order --> Retrieve Orders.', async () => {
       
     await request(app)
       .post('/api/order')
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsCustomer())
       .send({productIds, productQuantities})
       .expect(200);   
 

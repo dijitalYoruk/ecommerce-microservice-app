@@ -3,7 +3,15 @@ import { body } from 'express-validator';
 import Payment from '../../models/Payment';
 import stripe from '../../services/Stripe';
 import { Request, Response, Router } from 'express';
-import { authenticated, BadRequestError, NotAuthorizedError, OrderStatus, validateRequest } from '@conqueror-ecommerce/common';
+
+import { 
+    authorize, 
+    OrderStatus,
+    authenticated,
+    validateRequest,
+    BadRequestError, 
+    NotAuthorizedError, 
+    AuthorizationRoles } from '@conqueror-ecommerce/common';
 
 // models
 import Order from '../../models/Order';
@@ -91,5 +99,12 @@ const createPayment = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.post('/', authenticated, validateCreatePayment, createPayment);
+
+router.post('/', 
+    authenticated, 
+    authorize(AuthorizationRoles.Customer), 
+    validateCreatePayment, 
+    createPayment
+);
+
 export default router;

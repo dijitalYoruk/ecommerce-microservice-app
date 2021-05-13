@@ -1,6 +1,6 @@
 // imports
 import { Request, Response, Router } from 'express';
-import { authenticated, BadRequestError, NotAuthorizedError } from '@conqueror-ecommerce/common';
+import { authenticated, authorize, AuthorizationRoles, BadRequestError, NotAuthorizedError } from '@conqueror-ecommerce/common';
 
 // model
 import { __ } from 'i18n';
@@ -34,5 +34,5 @@ const showOrder = async (req: Request, res: Response) => {
 
  // route
 const router = Router();
-router.get('/:orderId', authenticated, showOrder);
+router.get('/:orderId', authenticated, authorize(AuthorizationRoles.Customer), showOrder);
 export default router;

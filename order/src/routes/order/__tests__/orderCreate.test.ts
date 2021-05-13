@@ -8,7 +8,7 @@ import { client } from '../../../services/NatsService';
 const sendRequest = async (body: any, status: number) => {
     await request(app)
       .post('/api/order')
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsCustomer())
       .send(body)
       .expect(status)
 }

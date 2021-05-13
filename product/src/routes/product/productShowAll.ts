@@ -1,7 +1,7 @@
 // imports
 import { __ } from 'i18n';
 import { Request, Response, Router } from 'express';
-import { authenticated } from '@conqueror-ecommerce/common';
+import { authenticated, authorize, AuthorizationRoles } from '@conqueror-ecommerce/common';
 
 // models
 import Product from '../../models/Product';
@@ -15,9 +15,18 @@ export const showAllProducts = async (req: Request, res: Response) => {
       status: 200,
       data: { products },
    });
-}; 
+};
 
 // route
 const router = Router();
-router.get('/', authenticated, showAllProducts);
+
+router.get('/',
+   authenticated, 
+   authorize(
+      AuthorizationRoles.Admin, 
+      AuthorizationRoles.Customer
+   ), 
+   showAllProducts
+);
+
 export default router;

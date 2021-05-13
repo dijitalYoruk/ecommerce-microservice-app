@@ -1,13 +1,15 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { AuthorizationRoles } from '@conqueror-ecommerce/common';
 
 jest.mock('../services/NatsService', () => jest.requireActual('../__mocks__/NatsService'))
 
 declare global {
    namespace NodeJS {
       interface Global {
-         signin(): string;
+         signinAsAdmin(): string;
+         signinAsCustomer(): string;
          signinCustom(payload: { username: string, email: string, id: string}): string;
       }
    }
@@ -38,11 +40,11 @@ afterAll(async () => {
 });
 
 
-global.signin = () => {
-   // Build a JWT payload.  { id, email }
+global.signinAsAdmin = () => {
    const payload = {
       username: 'testUser',
       email: 'test@test.com',
+      role: AuthorizationRoles.Admin, 
       id: new mongoose.Types.ObjectId().toHexString(),
    };
 
@@ -51,8 +53,20 @@ global.signin = () => {
    return `Bearer ${token}`;
 };
 
+global.signinAsCustomer = () => {
+   const payload = {
+      username: 'testUser',
+      email: 'test@test.com',
+      role: AuthorizationRoles.Customer, 
+      id: new mongoose.Types.ObjectId().toHexString(),
+   };
 
-global.signinCustom = (payload: { username: string, email: string, id: string}) => {
+   // Create the JWT!
+   const token = jwt.sign(payload, process.env.JWT_SECRET!);
+   return `Bearer ${token}`;
+};
+
+global.signinCustom = (payload: { username: string, email: string, id: string, role: string }) => {
    // Create the JWT!
    const token = jwt.sign(payload, process.env.JWT_SECRET!);
    return `Bearer ${token}`;

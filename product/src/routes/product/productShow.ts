@@ -1,7 +1,7 @@
 // imports
 import { __ } from 'i18n';
 import { Request, Response, Router } from 'express';
-import { authenticated, NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
+import { authenticated, authorize, AuthorizationRoles, NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
 
 // models
 import Product from '../../models/Product';
@@ -15,10 +15,6 @@ const showProduct = async (req: Request, res: Response) => {
         throw new NotFoundError();
     }
 
-    if (product.authorId !== req.currentUserJWT?.id) {
-        throw new NotAuthorizedError(__('error_authorization'));
-    }
-
     res.status(200).json({
         status: 200,
         data: { product },
@@ -27,5 +23,14 @@ const showProduct = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.get('/:productId', authenticated, showProduct);
+
+router.get('/:productId', 
+    authenticated, 
+    authorize(
+        AuthorizationRoles.Admin, 
+        AuthorizationRoles.Customer
+    ), 
+    showProduct
+);
+
 export default router;

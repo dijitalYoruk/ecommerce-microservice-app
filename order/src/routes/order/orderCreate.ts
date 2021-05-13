@@ -4,7 +4,7 @@ import Keys from '../../util/keys';
 import { body } from 'express-validator';
 import { Request, Response, Router } from 'express';
 import PublisherOrderCreated from '../../events/publishers/PublisherOrderCreated';
-import { authenticated, validateRequest, OrderStatus, BadRequestError } from '@conqueror-ecommerce/common';
+import { authenticated, authorize, AuthorizationRoles, validateRequest, OrderStatus, BadRequestError } from '@conqueror-ecommerce/common';
 
 // models
 import Order from '../../models/Order';
@@ -93,5 +93,12 @@ const createOrder = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.post('/', authenticated, validateCreateOrder, createOrder);
+
+router.post('/', 
+    authenticated, 
+    authorize(AuthorizationRoles.Customer), 
+    validateCreateOrder, 
+    createOrder
+);
+
 export default router;

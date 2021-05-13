@@ -17,7 +17,7 @@ it('PATCH:/api/product --> Unauthorized', async () => {
 });
 
 it('PATCH:/api/product --> Success', async () => {
-   const token = global.signin()
+   const token = global.signinAsAdmin()
 
    const body1 = {
       price: 500,
@@ -67,7 +67,7 @@ it('PATCH:/api/product --> Success', async () => {
 
 
 it('PATCH:/api/product --> Unrestrict Quantity Count', async () => {
-   const token = global.signin()
+   const token = global.signinAsAdmin()
 
    const body1 = {
       price: 500,
@@ -117,7 +117,7 @@ it('PATCH:/api/product --> Unrestrict Quantity Count', async () => {
 
 
 it('PATCH:/api/product --> Update only price.', async () => {
-   const token = global.signin()
+   const token = global.signinAsAdmin()
 
    const body = {
       price: 500,
@@ -167,7 +167,7 @@ it('PATCH:/api/product --> Wrong Author', async () => {
 
    await request(app)
       .post('/api/product')
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body1)
       .expect(200);
 
@@ -184,7 +184,7 @@ it('PATCH:/api/product --> Wrong Author', async () => {
 
    await request(app)
       .patch(`/api/product/${data[0]._id}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body2)
       .expect(401);
 });
@@ -195,7 +195,7 @@ it('PATCH:/api/product --> Wrong Price', async () => {
 
    await request(app)
       .patch(`/api/product/${productId}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body2)
       .expect(400);
 });
@@ -206,7 +206,7 @@ it('PATCH:/api/product --> Wrong Description', async () => {
 
    await request(app)
       .patch(`/api/product/${productId}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body2)
       .expect(400);
 });
@@ -217,7 +217,7 @@ it('PATCH:/api/product --> Wrong Placeholder', async () => {
 
    await request(app)
       .patch(`/api/product/${productId}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body2)
       .expect(400);
 });

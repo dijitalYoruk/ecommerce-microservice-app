@@ -3,7 +3,7 @@
 import { __ } from 'i18n';
 import { body } from 'express-validator';
 import { Request, Response, Router } from 'express';
-import { authenticated, validateRequest } from '@conqueror-ecommerce/common';
+import { authenticated, validateRequest, authorize, AuthorizationRoles } from '@conqueror-ecommerce/common';
 import PublisherProductCreated from '../../events/publishers/PublisherProductCreated';
 
 // models
@@ -72,5 +72,12 @@ const createProduct = async (req: Request, res: Response) => {
 };
 
 const router = Router();
-router.post('/', authenticated, validateCreateProduct, createProduct);
+
+router.post('/', 
+    authenticated, 
+    authorize(AuthorizationRoles.Admin), 
+    validateCreateProduct, 
+    createProduct
+);
+
 export default router;

@@ -3,7 +3,15 @@
 import { __ } from 'i18n';
 import { Request, Response, Router } from 'express';
 import PublisherOrderCancelled from '../../events/publishers/PublisherOrderCancelled';
-import { authenticated, BadRequestError, NotAuthorizedError, OrderStatus } from '@conqueror-ecommerce/common';
+
+import { 
+   authorize, 
+   OrderStatus,
+   authenticated,  
+   BadRequestError,
+   NotAuthorizedError, 
+   AuthorizationRoles,
+} from '@conqueror-ecommerce/common';
 
 // model
 import Order from '../../models/Order';
@@ -45,5 +53,11 @@ const deleteOrder = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.delete('/:orderId', authenticated, deleteOrder);
+
+router.delete('/:orderId', 
+   authenticated, 
+   authorize(AuthorizationRoles.Customer), 
+   deleteOrder
+);
+
 export default router;

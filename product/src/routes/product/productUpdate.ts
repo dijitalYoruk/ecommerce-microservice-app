@@ -4,7 +4,14 @@ import { body } from 'express-validator';
 import { Request, Response, Router } from 'express';
 import { validateRequest } from '@conqueror-ecommerce/common';
 import PublisherProductUpdated from '../../events/publishers/PublisherProductUpdated';
-import { authenticated, BadRequestError, NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
+
+import { 
+    authorize, 
+    authenticated, 
+    NotFoundError, 
+    BadRequestError, 
+    NotAuthorizedError,
+    AuthorizationRoles, } from '@conqueror-ecommerce/common';
 
 // models
 import Product from '../../models/Product';
@@ -31,6 +38,16 @@ const validateUpdateProduct = [
         .if(body('placeholder').exists())
         .notEmpty()
         .withMessage(__('validation_request', __('placeholder'))),
+
+    body('isQuantityRestricted')
+        .if(body('isQuantityRestricted').exists())
+        .isBoolean()
+        .withMessage('Please specify whether the product is quantity restricted.'),
+
+    body('quantity')
+        .if(body('quantity').exists())
+        .custom((quantity, { req }) => (req.body.isQuantityRestricted && quantity > 0) || !req.body.isQuantityRestricted)
+        .withMessage('Please specify product quantity restricted.'),
 
     body('description')
         .if(body('description').exists())
@@ -83,5 +100,12 @@ const updateProduct = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.patch('/:productId', authenticated, validateUpdateProduct, updateProduct);
+
+router.patch('/:productId', 
+    authenticated, 
+    authorize(AuthorizationRoles.Admin), 
+    validateUpdateProduct, 
+    updateProduct
+);
+
 export default router;

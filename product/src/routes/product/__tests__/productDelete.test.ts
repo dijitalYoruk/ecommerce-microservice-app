@@ -12,11 +12,18 @@ it('DELETE:/api/product --> Unauthorized', async () => {
    await request(app)
       .delete('/api/product/sadsadsadsa')
       .send({})
-      .expect(401);   
+      .expect(401);
+
+
+   await request(app)
+      .delete('/api/product/sadsadsadsa')
+      .set('Authorization', global.signinAsCustomer())
+      .send({})
+      .expect(401);
 });
 
 it('DELETE:/api/product --> Success', async () => {
-   const token = global.signin()
+   const token = global.signinAsAdmin()
 
    const body1 = {
       price: 500,
@@ -59,7 +66,7 @@ it('DELETE:/api/product --> Wrong Author', async () => {
 
    await request(app)
       .post('/api/product')
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body1)
       .expect(200);
 
@@ -68,14 +75,14 @@ it('DELETE:/api/product --> Wrong Author', async () => {
 
    await request(app)
       .delete(`/api/product/${productId}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .expect(401);
 });
 
 it('DELETE:/api/product --> Missing ProductId', async () => {
    await request(app)
       .delete(`/api/product`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send({})
       .expect(404);
 });

@@ -4,6 +4,7 @@ import { Request } from 'express';
 
 interface JwtCredentials {
    id: string;
+   role: string;
    email: string;
    username: string;
 }

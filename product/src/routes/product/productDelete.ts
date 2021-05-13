@@ -1,9 +1,8 @@
 // imports
 import { __ } from 'i18n';
-import { body } from 'express-validator';
 import { Request, Response, Router } from 'express';
 import PublisherProductDeleted from '../../events/publishers/PublisherProductDeleted';
-import { authenticated, validateRequest, NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
+import { authenticated, authorize, AuthorizationRoles, NotAuthorizedError, NotFoundError } from '@conqueror-ecommerce/common';
 
 // models
 import Product from '../../models/Product';
@@ -36,5 +35,11 @@ const deleteProduct = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.delete('/:productId', authenticated, deleteProduct);
+
+router.delete('/:productId', 
+    authenticated, 
+    authorize(AuthorizationRoles.Admin),
+    deleteProduct
+);
+
 export default router;

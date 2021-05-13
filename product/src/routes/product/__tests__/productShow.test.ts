@@ -14,10 +14,11 @@ it('GET:/api/product/:id --> Unauthorized', async () => {
    await request(app)
       .get(`/api/product/${productId}`)
       .expect(401);   
+
 });
 
 it('GET:/api/product/:id --> Success', async () => {
-   const token = global.signin()
+   const token = global.signinAsCustomer()
 
    const body1 = {
       price: 500,
@@ -30,7 +31,7 @@ it('GET:/api/product/:id --> Success', async () => {
 
    await request(app)
       .post('/api/product')
-      .set('Authorization', token)
+      .set('Authorization', global.signinAsAdmin())
       .send(body1)
       .expect(200);
 
@@ -48,6 +49,6 @@ it('GET:/api/product/:id --> Wrong Product', async () => {
 
    await request(app)
       .get(`/api/product/${productId}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsCustomer())
       .expect(404);
 });

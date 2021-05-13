@@ -6,7 +6,7 @@ import Product from '../../../models/Product';
 import stripe from '../../../services/Stripe';
 import { PaymentDoc } from '../../../models/Payment';
 import { client } from '../../../services/NatsService';
-import { OrderStatus } from '@conqueror-ecommerce/common';
+import { AuthorizationRoles, OrderStatus } from '@conqueror-ecommerce/common';
 
 it('POST: /api/payment --> Unauthorized', async () => {
     await request(app).post(`/api/payment`).expect(401);
@@ -15,7 +15,7 @@ it('POST: /api/payment --> Unauthorized', async () => {
 it('POST: /api/payment --> missing order id', async () => {
     await request(app)
         .post(`/api/payment`)
-        .set('Authorization', global.signin())
+        .set('Authorization', global.signinAsCustomer())
         .send({ token: 'tok_visa' })
         .expect(400);
 })
@@ -23,7 +23,7 @@ it('POST: /api/payment --> missing order id', async () => {
 it('POST: /api/payment --> missing token', async () => {
     await request(app)
         .post(`/api/payment`)
-        .set('Authorization', global.signin())
+        .set('Authorization', global.signinAsCustomer())
         .send({ orderId: 'orderId' })
         .expect(400);
 })
@@ -45,6 +45,7 @@ it('POST: /api/payment --> expired order', async () => {
     const payload = {
         username: 'testUser',
         email: 'test@test.com',
+        role: AuthorizationRoles.Customer,
         id: new mongoose.Types.ObjectId().toHexString(),
     };
 
@@ -87,6 +88,7 @@ it('POST: /api/payment --> cancelled order', async () => {
     const payload = {
         username: 'testUser',
         email: 'test@test.com',
+        role: AuthorizationRoles.Customer,
         id: new mongoose.Types.ObjectId().toHexString(),
     };
 
@@ -128,6 +130,7 @@ it('POST: /api/payment --> completed order', async () => {
     const payload = {
         username: 'testUser',
         email: 'test@test.com',
+        role: AuthorizationRoles.Customer,
         id: new mongoose.Types.ObjectId().toHexString(),
     };
 
@@ -189,7 +192,7 @@ it('POST: /api/payment --> unauthorized order', async () => {
 
     await request(app)
         .post(`/api/payment`)
-        .set('Authorization', global.signin())
+        .set('Authorization', global.signinAsCustomer())
         .send({ token: 'tok_visa', orderId: order.id })
         .expect(401);
 })
@@ -211,6 +214,7 @@ it('POST: /api/payment --> success', async () => {
     const payload = {
         username: 'testUser',
         email: 'test@test.com',
+        role: AuthorizationRoles.Customer,
         id: new mongoose.Types.ObjectId().toHexString(),
     };
 

@@ -15,13 +15,13 @@ it('GET:/api/order/:orderId --> Wrong Order', async () => {
 
    await request(app)
       .get(`/api/order/${orderId}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsCustomer())
       .expect(400);   
 }); 
 
 
 it('GET:/api/order/:orderId --> Retrieve Order.', async () => {
-   const token = global.signin()
+   const token = global.signinAsCustomer()
 
    const product1 = Product.build({
       price: 500,
@@ -69,7 +69,7 @@ it('GET:/api/order/:orderId --> Unauthorized Order Retrieval.', async () => {
 
    await request(app)
       .post('/api/order')
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsCustomer())
       .send({productIds, productQuantities})
       .expect(200);    
 
@@ -79,6 +79,6 @@ it('GET:/api/order/:orderId --> Unauthorized Order Retrieval.', async () => {
 
    await request(app)
       .get(`/api/order/${order.id}`)
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsCustomer())
       .expect(401);
 }); 

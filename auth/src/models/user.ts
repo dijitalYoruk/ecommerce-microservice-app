@@ -1,6 +1,7 @@
-import keys from '../util/keys'
-import Password from '../util/password'
+import keys from '../util/keys';
+import Password from '../util/password';
 import mongoose, { Schema } from 'mongoose';
+import { AuthorizationRoles } from '@conqueror-ecommerce/common';
 
 // =====================
 // Attributes
@@ -27,6 +28,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
 // User Document
 // =====================
 export interface UserDoc extends mongoose.Document {
+   role: string,
    email: string,
    username: string,
    authType: string,
@@ -51,6 +53,11 @@ const UserSchema = new Schema({
       required: [true, 'Username is missing'],
       trim: true
    },  
+   role: {
+      type: String,
+      enum: AuthorizationRoles,
+      default: AuthorizationRoles.Customer
+   },
    email: {
       type: String,
       unique: [true, 'Email needs to be unique'], 

@@ -12,16 +12,22 @@ const description = 'new description new description \
 const sendRequest = async (body: any, status: number) => {
    await request(app)
       .post('/api/product')
-      .set('Authorization', global.signin())
+      .set('Authorization', global.signinAsAdmin())
       .send(body)
-      expect(status);    
+      .expect(status);
 }
 
 it('POST:/api/product --> Unauthorized', async () => {
    await request(app)
-            .post('/api/product')
-            .send({})
-            .expect(401);
+      .post('/api/product')
+      .send({})
+      .expect(401);
+
+   await request(app)
+      .post('/api/product')
+      .set('Authorization', global.signinAsCustomer())
+      .send({})
+      .expect(401);
 });
 
 it('POST:/api/product --> Success with restricted quantity', async () => {
@@ -88,7 +94,7 @@ it('POST:/api/product --> Wrong and Missing Title', async () => {
       isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
-   
+
    await sendRequest(body1, 400);
    await sendRequest(body2, 400);
 });
@@ -110,7 +116,7 @@ it('POST:/api/product --> Wrong and Missing Description', async () => {
       isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
-   
+
    await sendRequest(body1, 400);
    await sendRequest(body2, 400);
 });
@@ -132,7 +138,7 @@ it('POST:/api/product --> Wrong and Missing Price', async () => {
       isQuantityRestricted: true,
       placeholder: 'new placeholder',
    };
-   
+
    await sendRequest(body1, 400);
    await sendRequest(body2, 400);
 });
@@ -155,7 +161,7 @@ it('POST:/api/product --> Wrong and Missing Placeholder', async () => {
       title: 'new title',
       isQuantityRestricted: true,
    };
-   
+
    await sendRequest(body1, 400);
    await sendRequest(body2, 400);
 });
@@ -177,7 +183,7 @@ it('POST:/api/product --> Wrong and Missing Quantity', async () => {
       title: 'new title',
       isQuantityRestricted: true,
    };
-   
+
    await sendRequest(body1, 400);
    await sendRequest(body2, 400);
 });

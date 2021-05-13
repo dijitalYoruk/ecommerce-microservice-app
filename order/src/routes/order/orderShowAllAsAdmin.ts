@@ -1,7 +1,13 @@
 // imports
 import { __ } from 'i18n';
 import { Request, Response, Router } from 'express';
-import { OrderStatus, authenticated } from '@conqueror-ecommerce/common';
+
+import {  
+   authorize, 
+   OrderStatus, 
+   authenticated, 
+   AuthorizationRoles 
+} from '@conqueror-ecommerce/common';
 
 // model
 import Order from '../../models/Order';
@@ -42,5 +48,11 @@ export const showAllOrdersAsAdmin = async (req: Request, res: Response) => {
 
 // route
 const router = Router();
-router.get('/asAdmin', authenticated, showAllOrdersAsAdmin);
+
+router.get('/asAdmin', 
+   authenticated, 
+   authorize(AuthorizationRoles.Admin), 
+   showAllOrdersAsAdmin
+);
+
 export default router;
