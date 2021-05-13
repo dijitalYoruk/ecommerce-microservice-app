@@ -10,10 +10,15 @@ export class ListenerProductCreated extends BaseListener<EventProductCreated> {
     subject: NatsSubjects.ProductCreated = NatsSubjects.ProductCreated
 
     async onMessage(data: EventProductCreated['data'], msg: Message) {
-        const { id, title, price, quantity,   placeholder, isQuantityRestricted } = data
-        const product = Product.build({ id, title, price, quantity, placeholder, isQuantityRestricted })
+        const { productId, title, price, quantity, 
+            placeholder, isQuantityRestricted } = data
+        
+        const product = Product.build({ 
+            id: productId, title, price, quantity, 
+            placeholder, isQuantityRestricted 
+        })
+
         await product.save()
         msg.ack()
     }
 }
-

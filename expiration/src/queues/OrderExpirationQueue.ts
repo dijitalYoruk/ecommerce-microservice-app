@@ -4,7 +4,7 @@ import keys from '../util/keys';
 import PublisherOrderExpired from '../events/publishers/PublisherOrderExpired'
 
 interface Payload {
-  orderId: string;
+  orderId: string
 }
 
 const expirationQueue = new Queue<Payload>('order:expiration', {
@@ -12,7 +12,8 @@ const expirationQueue = new Queue<Payload>('order:expiration', {
 });
 
 expirationQueue.process(async (job) => {
-    PublisherOrderExpired.publish({ id: job.data.orderId });
+    const { orderId } = job.data
+    PublisherOrderExpired.publish({ order: orderId });
 });
 
 export { expirationQueue };

@@ -22,7 +22,10 @@ const deleteProduct = async (req: Request, res: Response) => {
     }
 
     await product.remove();
-    await PublisherProductDeleted.publish({ id: product.id })
+    await PublisherProductDeleted.publish({ 
+        product: product.id, 
+        version: product.version 
+    })
 
     res.status(200).json({
         status: 200,

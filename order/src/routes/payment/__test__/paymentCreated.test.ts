@@ -1,17 +1,18 @@
-import { OrderStatus } from '@conqueror-ecommerce/common';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../../app';
 import Order from '../../../models/Order';
-import { PaymentDoc } from '../../../models/Payment';
 import Product from '../../../models/Product';
 import stripe from '../../../services/Stripe';
+import { PaymentDoc } from '../../../models/Payment';
+import { client } from '../../../services/NatsService';
+import { OrderStatus } from '@conqueror-ecommerce/common';
 
 it('POST: /api/payment --> Unauthorized', async () => {
     await request(app).post(`/api/payment`).expect(401);
 })
 
-it('POST: /api/order/:orderId/payment --> missing order id', async () => {
+it('POST: /api/payment --> missing order id', async () => {
     await request(app)
         .post(`/api/payment`)
         .set('Authorization', global.signin())
@@ -19,7 +20,7 @@ it('POST: /api/order/:orderId/payment --> missing order id', async () => {
         .expect(400);
 })
 
-it('POST: /api/order/:orderId/payment --> missing token', async () => {
+it('POST: /api/payment --> missing token', async () => {
     await request(app)
         .post(`/api/payment`)
         .set('Authorization', global.signin())
@@ -70,7 +71,7 @@ it('POST: /api/payment --> expired order', async () => {
 })
 
 
-it('POST: /api/order/:orderId/payment --> cancelled order', async () => {
+it('POST: /api/payment --> cancelled order', async () => {
 
     const product = Product.build({
         price: 500,
@@ -111,7 +112,7 @@ it('POST: /api/order/:orderId/payment --> cancelled order', async () => {
         .expect(400);
 })
 
-it('POST: /api/order/:orderId/payment --> completed order', async () => {
+it('POST: /api/payment --> completed order', async () => {
 
     const product = Product.build({
         price: 500,
@@ -154,7 +155,7 @@ it('POST: /api/order/:orderId/payment --> completed order', async () => {
 })
 
 
-it('POST: /api/order/:orderId/payment --> unauthorized order', async () => {
+it('POST: /api/payment --> unauthorized order', async () => {
 
     const product = Product.build({
         price: 500,
@@ -194,7 +195,7 @@ it('POST: /api/order/:orderId/payment --> unauthorized order', async () => {
 })
 
 
-it('POST: /api/order/:orderId/payment --> success', async () => {
+it('POST: /api/payment --> success', async () => {
 
     const product = Product.build({
         price: 500,
@@ -237,6 +238,8 @@ it('POST: /api/order/:orderId/payment --> success', async () => {
     const orderUpdated = await Order.findById(order.id).populate('payment')
     const payment = orderUpdated!.payment as PaymentDoc
     const charge = await stripe.charges.retrieve(payment.stripeId)
+
+    expect(client.publish).toHaveBeenCalled()
     expect(charge.id).toEqual(payment.stripeId)
     expect(charge.amount).toEqual(payment.amount * 100)
 })

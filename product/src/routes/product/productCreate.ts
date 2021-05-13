@@ -57,8 +57,13 @@ const createProduct = async (req: Request, res: Response) => {
     const product = Product.build({ ...body, authorId: req.currentUserJWT?.id! });
     await product.save();
 
-    const { id, title, placeholder, price, isQuantityRestricted, quantity } = product;
-    await PublisherProductCreated.publish({ id, title, placeholder, price, isQuantityRestricted, quantity })
+    const { id, title, price, version, quantity, 
+        placeholder, isQuantityRestricted, } = product;
+
+    await PublisherProductCreated.publish({ 
+        productId: id, version, title, placeholder, 
+        price, isQuantityRestricted, quantity 
+    })
 
     res.status(200).json({
         status: 200,

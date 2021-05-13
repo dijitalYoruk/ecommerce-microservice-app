@@ -10,8 +10,7 @@ export class ListenerOrderExpired extends BaseListener<EventOrderExpired> {
     subject: NatsSubjects.OrderExpired = NatsSubjects.OrderExpired
 
     async onMessage(data: EventOrderExpired['data'], msg: Message) {
-        
-        const order = await Order.findById(data.id)
+        const order = await Order.findById(data.order)
         
         if (!order) {
             throw new Error('Order not Found.');
@@ -24,21 +23,11 @@ export class ListenerOrderExpired extends BaseListener<EventOrderExpired> {
         order.set({ status: OrderStatus.Expired })
         await order.save()
 
-        const products = order.products.map(orderProduct => {
-            return { 
-               id: orderProduct.product as string, 
-               quantity: orderProduct.quantity, 
-               unitSellPrice: orderProduct.unitSellPrice 
-            } 
-        })
-
         await PublisherOrderCancelled.publish({
-            products,
-            id: order.id,
+            order: order.id,
             status: order.status,
             version: order.version,
-            customerId: order.customer,
-            expiresAt: order.expiresAt.toISOString(), 
+            products: order.products,
         })
 
         msg.ack()

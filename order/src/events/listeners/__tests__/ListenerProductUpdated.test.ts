@@ -21,7 +21,7 @@ it('ListenerProductUpdated', async () => {
     const eventData: EventProductUpdated['data'] = {
         price: 200,
         quantity: 250,
-        id: product.id,
+        productId: product.id,
         isQuantityRestricted: true,
         version: product.version + 1,
         title: 'product title 1 updated',
@@ -39,9 +39,9 @@ it('ListenerProductUpdated', async () => {
     const productUpdated = await Product.findById(product.id)
 
     // check props
-    expect(productUpdated!.id).toEqual(eventData.id)
     expect(productUpdated!.price).toEqual(eventData.price)
     expect(productUpdated!.title).toEqual(eventData.title)
+    expect(productUpdated!.id).toEqual(eventData.productId)
     expect(productUpdated!.version).toEqual(product.version + 1)
     expect(productUpdated!.quantity).toEqual(eventData.quantity)
     expect(productUpdated!.placeholder).toEqual(eventData.placeholder)

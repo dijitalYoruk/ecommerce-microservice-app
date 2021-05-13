@@ -7,6 +7,7 @@ import { authenticated, BadRequestError, NotAuthorizedError, OrderStatus, valida
 
 // models
 import Order from '../../models/Order';
+import PublisherOrderCompleted from '../../events/publishers/PublisherOrderCompleted';
 
 // request
 interface RequestCreatePayment {
@@ -76,6 +77,11 @@ const createPayment = async (req: Request, res: Response) => {
     await payment.save()
     order.payment = payment.id
     await order.save()
+
+    await PublisherOrderCompleted.publish({
+        order: order.id,
+        version: order.version
+    })
 
     res.status(200).send({
         status: 200,

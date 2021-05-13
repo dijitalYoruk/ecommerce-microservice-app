@@ -10,11 +10,6 @@ import Order from '../../models/Order';
 
 // method
 
-/**
- * Deletes the order and publishes event.
- * @param req is the Request Object
- * @param res is the Response Object
- */
 const deleteOrder = async (req: Request, res: Response) => {
    const { orderId } = req.params;
    const order = await Order.findById(orderId);
@@ -34,21 +29,11 @@ const deleteOrder = async (req: Request, res: Response) => {
    order.status = OrderStatus.Cancelled;
    await order.save();
 
-   const products = order.products.map(orderProduct => {
-      return {
-         id: orderProduct.product as string,
-         quantity: orderProduct.quantity,
-         unitSellPrice: orderProduct.unitSellPrice
-      }
-   })
-
    await PublisherOrderCancelled.publish({
-      products,
-      id: order.id,
+      order: order.id,
       status: order.status,
       version: order.version,
-      customerId: order.customer,
-      expiresAt: order.expiresAt.toISOString(),
+      products: order.products,
    })
 
    res.status(200).json({

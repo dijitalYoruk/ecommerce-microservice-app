@@ -67,8 +67,13 @@ const updateProduct = async (req: Request, res: Response) => {
     product.set(body)
     product = await product.save();
 
-    const { id, title, placeholder, price, isQuantityRestricted, quantity, version } = product;
-    await PublisherProductUpdated.publish({ id, title, placeholder, price, isQuantityRestricted, quantity, version })
+    const { id, title, price, version, quantity, 
+        placeholder, isQuantityRestricted, } = product;
+
+    await PublisherProductUpdated.publish({ 
+        productId: id, version, title, placeholder, 
+        price, isQuantityRestricted, quantity  
+    })
 
     res.status(200).json({
         status: 200,

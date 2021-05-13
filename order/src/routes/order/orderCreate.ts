@@ -77,22 +77,12 @@ const createOrder = async (req: Request, res: Response) => {
 
     await order.save();
 
-    // publish event
-    orderProducts = orderProducts.map(orderProduct => {
-        return {
-            id: orderProduct.product,
-            quantity: orderProduct.quantity,
-            unitSellPrice: orderProduct.unitSellPrice
-        }
-    })
-
     await PublisherOrderCreated.publish({
-        id: order.id,
+        order: order.id,
         status: order.status,
         version: order.version,
-        products: orderProducts,
-        customerId: order.customer,
-        expiresAt: expiresAt.toISOString(),
+        products: order.products,
+        expiresAt: order.expiresAt.toISOString(),
     })
 
     res.status(200).json({

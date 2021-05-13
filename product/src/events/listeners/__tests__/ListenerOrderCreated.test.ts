@@ -50,13 +50,12 @@ it('ListenerOrderCreated', async () => {
     const eventData: EventOrderCreated['data'] = {
         version: 1,
         expiresAt: 'dummy',
-        customerId: 'dummy',
         status: OrderStatus.Created,
-        id: mongoose.Types.ObjectId().toHexString(),
+        order: mongoose.Types.ObjectId().toHexString(),
         products: [
-            { id: product1.id, quantity: 3, unitSellPrice: 12 },
-            { id: product2.id, quantity: 5, unitSellPrice: 30 },
-            { id: product3.id, quantity: 1, unitSellPrice: 50 },
+            { product: product1.id, quantity: 3, unitSellPrice: 12 },
+            { product: product2.id, quantity: 5, unitSellPrice: 30 },
+            { product: product3.id, quantity: 1, unitSellPrice: 50 },
         ]
     }
 

@@ -11,7 +11,7 @@ export class ListenerOrderCancelled extends BaseListener<EventOrderCancelled> {
 
     async onMessage(data: EventOrderCancelled['data'], msg: Message) {
         // retrieve products
-        const productIds = data.products.map(product => product.id)
+        const productIds = data.products.map(product => product.product)
         const productQuantities = data.products.map(product => product.quantity)
         const products: ProductDoc[] = await Product.find({ _id: { $in: productIds } })
 
@@ -27,8 +27,13 @@ export class ListenerOrderCancelled extends BaseListener<EventOrderCancelled> {
             await product.save()
         
             // publish update event
-            const { id, title, placeholder, version, price, quantity, isQuantityRestricted } = product
-            await PublisherProductUpdated.publish({ id, title, placeholder, price, quantity, version, isQuantityRestricted })
+            const { id, title, placeholder, version, 
+                price, quantity, isQuantityRestricted } = product
+            
+            await PublisherProductUpdated.publish({ 
+                productId: id, title, placeholder, price, 
+                quantity, version, isQuantityRestricted 
+            })
         }
 
         msg.ack()

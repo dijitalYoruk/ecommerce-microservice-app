@@ -32,7 +32,7 @@ it('ListenerProductExpired', async () => {
     await order.save()
 
     // build event data
-    const eventData: EventOrderExpired['data'] = { id: order.id }
+    const eventData: EventOrderExpired['data'] = { order: order.id }
 
     // @ts-ignore
     const message: Message = { ack: jest.fn() }

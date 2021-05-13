@@ -11,7 +11,7 @@ export class ListenerOrderCreated extends BaseListener<EventOrderCreated> {
 
     async onMessage(data: EventOrderCreated['data'], msg: Message) {
         // retrieve products
-        const productIds = data.products.map(product => product.id)
+        const productIds = data.products.map(product => product.product)
         const productQuantities = data.products.map(product => product.quantity)
         const products: ProductDoc[] = await Product.find({ _id: { $in: productIds } })
 
@@ -27,8 +27,13 @@ export class ListenerOrderCreated extends BaseListener<EventOrderCreated> {
             await product.save()
 
             // publish update event
-            const { id, title, price, placeholder, version, quantity, isQuantityRestricted } = product
-            await PublisherProductUpdated.publish({ id, title, price, placeholder, version, quantity, isQuantityRestricted })
+            const { id, title, price, placeholder,
+                version, quantity, isQuantityRestricted } = product
+
+            await PublisherProductUpdated.publish({
+                productId: id, title, price, placeholder,
+                version, quantity, isQuantityRestricted
+            })
         }
 
         msg.ack()

@@ -9,7 +9,9 @@ export class ListenerProductUpdated extends BaseListener<EventProductUpdated> {
     subject: NatsSubjects.ProductUpdated = NatsSubjects.ProductUpdated
 
     async onMessage(data: EventProductUpdated['data'], msg: Message) {
-        const product = await Product.findByEvent(data)
+        const product = await Product.findByEvent({ 
+            id: data.productId, version: data.version 
+        })
 
         if (!product) { // product not found
             throw new Error('Product Not Found')

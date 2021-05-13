@@ -12,13 +12,10 @@ it('ListenerOrderCreated', async () => {
 
     const eventData: EventOrderCreated['data'] = {
         version: 1,
-        id: 'dummy',
-        customerId: 'dummy',
+        order: 'dummy',
         status: OrderStatus.Created,
         expiresAt: expiresAt.toISOString(),
-        products: [
-            { id: 'product1.id', quantity: 3, unitSellPrice: 12 },
-        ]
+        products: [{ product: 'product1.id', quantity: 3, unitSellPrice: 12 }]
     }
 
     // @ts-ignore

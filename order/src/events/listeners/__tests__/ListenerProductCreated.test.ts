@@ -8,11 +8,12 @@ it('ListenerProductCreated', async () => {
     // build event data
     const eventData: EventProductCreated['data'] = {
         price: 500,
+        version: 0,
         quantity: 100,
         title: 'product title 1',
         isQuantityRestricted: true,
         placeholder: 'placeholder1',
-        id: mongoose.Types.ObjectId().toHexString()
+        productId: mongoose.Types.ObjectId().toHexString()
     }
 
     // @ts-ignore
@@ -28,9 +29,9 @@ it('ListenerProductCreated', async () => {
     const product = products[0]
 
     // check props
-    expect(product.id).toEqual(eventData.id)
     expect(product.price).toEqual(eventData.price)
     expect(product.title).toEqual(eventData.title)
+    expect(product.id).toEqual(eventData.productId)
     expect(product.quantity).toEqual(eventData.quantity)
     expect(product.placeholder).toEqual(eventData.placeholder)
     expect(product.isQuantityRestricted).toEqual(eventData.isQuantityRestricted) 
