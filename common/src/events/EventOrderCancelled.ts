@@ -8,7 +8,7 @@ export interface EventOrderCancelled {
       version: number;
       status: OrderStatus;
       products: {
-         product: string;
+         product: any;
          quantity: number,
          unitSellPrice: number;
       }[]

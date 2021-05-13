@@ -9,7 +9,7 @@ export interface EventOrderCreated {
       expiresAt: string;
       status: OrderStatus;
       products: {
-         product: string;
+         product: any;
          quantity: number,
          unitSellPrice: number;
       }[]
