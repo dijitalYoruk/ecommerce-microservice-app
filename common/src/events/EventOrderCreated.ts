@@ -4,13 +4,12 @@ import { OrderStatus } from '../types/OrderStatus';
 export interface EventOrderCreated {
    subject: NatsSubjects.OrderCreated;
    data: {
-      id: string;
+      order: string;
       version: number;
       expiresAt: string;
-      customerId: string;
       status: OrderStatus;
       products: {
-         id: string;
+         product: string;
          quantity: number,
          unitSellPrice: number;
       }[]

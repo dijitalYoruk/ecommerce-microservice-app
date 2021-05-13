@@ -17,8 +17,8 @@ export * from './events/BaseListener';
 export * from './events/BasePublisher';
 export * from './events/EventOrderCreated';
 export * from './events/EventOrderExpired';
+export * from './events/EventOrderCompleted';
 export * from './events/EventProductCreated';
 export * from './events/EventProductUpdated';
 export * from './events/EventProductDeleted';
 export * from './events/EventOrderCancelled';
-

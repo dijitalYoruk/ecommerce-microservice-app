@@ -4,13 +4,11 @@ import { OrderStatus } from '../types/OrderStatus';
 export interface EventOrderCancelled {
    subject: NatsSubjects.OrderCancelled;
    data: {
-      id: string;
+      order: string;
       version: number;
-      expiresAt: string;
-      customerId: string;
       status: OrderStatus;
       products: {
-         id: string;
+         product: string;
          quantity: number,
          unitSellPrice: number;
       }[]
