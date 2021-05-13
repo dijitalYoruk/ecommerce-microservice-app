@@ -6,12 +6,14 @@ export * from './errors/emailServiceError';
 export * from './errors/notAuthorizedError';
 export * from './errors/requestValidationError';
 
-export * from './middlewares/authenticated';
+export * from './middlewares/authorize';
 export * from './middlewares/errorHandler';
+export * from './middlewares/authenticated';
 export * from './middlewares/validateRequest';
 
-export * from './types/NatsSubjects';
 export * from './types/OrderStatus';
+export * from './types/NatsSubjects';
+export * from './types/AuthorizationRoles';
 
 export * from './events/BaseListener';
 export * from './events/BasePublisher';

@@ -5,6 +5,7 @@ import { NotAuthorizedError } from '../errors/notAuthorizedError';
 
 interface UserPayload {
    id: string;
+   role: string;
    email: string;
    username: string;
 }
